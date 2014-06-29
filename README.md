@@ -5,7 +5,7 @@ A none CI implementation of BIOINSTALL's [CodeIgniter library](http://github.com
 I found this library to be incredibly useful when I was working in CodeIgniter. However a little bit of work needed to be done to use it in a Laravel project. I can't take any of the credit for the actual "heavy lifting" going on in the class.
 
 ### Installation
- 1. Include the package in your composer.json file
+ 1. Include the package in your composer.json file `"appitventures/phpgmaps": "dev-master",`
  2. Add `'Appitventures\Phpgmaps\PhpgmapsServiceProvider',` to app.config
  3. Add `'Gmaps' => 'Appitventures\Phpgmaps\Facades\Phpgmaps',` to your facade list
 
