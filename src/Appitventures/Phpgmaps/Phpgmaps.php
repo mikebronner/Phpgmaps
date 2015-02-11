@@ -1,8 +1,5 @@
 <?php namespace Appitventures\Phpgmaps;
 
-use App;
-use JSMin;
-
 class Phpgmaps
 {
 
@@ -2116,11 +2113,11 @@ class Phpgmaps
 
         // Minify the Javascript if the $minifyJS config value is true. Requires Jsmin.php and PHP 5+
         if ($this->minifyJS) {
-            $CI = App::make('JSMin');
+            $CI = \App::make('jsmin');
             $this->output_js_contents = $CI->jsmin->min($this->output_js_contents);
         }
 
-        if ($this->jsfile == '') {
+        if ($this->jsfile == "") {
             $this->output_js .= $this->output_js_contents;
         } else { // if needs writing to external js file
             if (!$handle = fopen($this->jsfile, "w")) {
