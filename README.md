@@ -1,36 +1,13 @@
 ## Phpgmaps
 A none CI implementation of BIOINSTALL's [CodeIgniter library](http://github.com/BIOSTALL/CodeIgniter-Google-Maps-V3-API-Library).
 
----
-
+### Overview
 I found this library to be incredibly useful when I was working in CodeIgniter. However a little bit of work needed to be done to use it in a Laravel project. I can't take any of the credit for the actual "heavy lifting" going on in the class.
 
----
-
-[![Latest Stable Version](https://poser.pugx.org/appitventures/phpgmaps/v/stable.svg)](https://packagist.org/packages/appitventures/phpgmaps)
-[![Total Downloads](https://poser.pugx.org/appitventures/phpgmaps/downloads.svg)](https://packagist.org/packages/appitventures/phpgmaps)
-[![Monthly Downloads](https://poser.pugx.org/appitventures/phpgmaps/d/monthly.png)](https://packagist.org/packages/appitventures/phpgmaps)
-[![License](https://poser.pugx.org/appitventures/phpgmaps/license.svg)](https://packagist.org/packages/appitventures/phpgmaps)
-
-#Installation
- 
- Require this package in your `composer.json` and update composer.
-
-```php
-"appitventures/phpgmaps": "2.0-dev"
-```
-
-After updating composer, add the ServiceProvider to the providers array in `app/config/app.php`
-
-```php
-'Appitventures\Phpgmaps\PhpgmapsServiceProvider',
-```
-
-And the Facade
-
-```php
-'Gmaps' => 'Appitventures\Phpgmaps\Facades\Phpgmaps',
-```
+### Installation
+ 1. Include the package in your composer.json file `"appitventures/phpgmaps": "dev-master",`
+ 2. Add `'Appitventures\Phpgmaps\PhpgmapsServiceProvider',` to app.config
+ 3. Add `'Gmaps' => 'Appitventures\Phpgmaps\Facades\Phpgmaps',` to your facade list
 
 ### Example 
 The following code will prompt the user for access to their geolocation and then creates a map centered on their lat/lng

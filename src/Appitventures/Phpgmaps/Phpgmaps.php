@@ -1,153 +1,152 @@
-<?php namespace Appitventures\Phpgmaps;
+<?php  namespace Appitventures\Phpgmaps;
 
-class Phpgmaps
-{
+class Phpgmaps {
 
     protected $output_js;
     protected $output_js_contents;
     protected $output_html;
 
-    public $adsense = false;                    // Whether Google Adsense For Content should be enabled
-    public $adsenseChannelNumber = '';                        // The Adsense channel number for tracking the performance of this AdUnit
-    public $adsenseFormat = 'HALF_BANNER';            // The format of the AdUnit
-    public $adsensePosition = 'TOP_CENTER';                // The position of the AdUnit
-    public $adsensePublisherID = '';                        // Your Google AdSense publisher ID
-    public $apiKey = '';                        // If you've got an API key you can use it by passing this parameter. Setup an API key here: https://code.google.com/apis/console
-    public $backgroundColor = '';                        // A hex color value shown as the map background when tiles have not yet loaded as the user pans
-    public $bicyclingOverlay = false;                    // If set to TRUE will overlay bicycling information (ie. bike paths and suggested routes) onto the map by default
-    public $center = '37.4419, -122.1419';        // Sets the default center location (lat/long co-ordinate or address) of the map. If defaulting to the users location set to "auto"
+    var $adsense					= FALSE; 					// Whether Google Adsense For Content should be enabled
+    var $adsenseChannelNumber		= ''; 						// The Adsense channel number for tracking the performance of this AdUnit
+    var $adsenseFormat				= 'HALF_BANNER';			// The format of the AdUnit
+    var $adsensePosition			= 'TOP_CENTER';				// The position of the AdUnit
+    var $adsensePublisherID			= '';						// Your Google AdSense publisher ID
+    var $apiKey						= ''; 						// If you've got an API key you can use it by passing this parameter. Setup an API key here: https://code.google.com/apis/console
+    var $backgroundColor			= '';						// A hex color value shown as the map background when tiles have not yet loaded as the user pans
+    var $bicyclingOverlay			= FALSE;					// If set to TRUE will overlay bicycling information (ie. bike paths and suggested routes) onto the map by default
+    var $center						= "37.4419, -122.1419";		// Sets the default center location (lat/long co-ordinate or address) of the map. If defaulting to the users location set to "auto"
+    var $class 						= '';						// A class name if wishing to style the map further through CSS. Can also be useful if wanting it to be responsive etc.
+    var $cluster					= FALSE;					// Whether to cluster markers
+    var $clusterGridSize			= 60;						// The grid size of a cluster in pixels
+    var $clusterMaxZoom				= '';						// The maximum zoom level that a marker can be part of a cluster
+    var $clusterZoomOnClick			= TRUE;						// Whether the default behaviour of clicking on a cluster is to zoom into it
+    var $clusterAverageCenter		= FALSE;					// Whether the center of each cluster should be the average of all markers in the cluster
+    var $clusterMinimumClusterSize	= 2;						// The minimum number of markers to be in a cluster before the markers are hidden and a count is shown
+    var $disableDefaultUI			= FALSE;					// If set to TRUE will hide the default controls (ie. zoom, scale etc)
+    var $disableDoubleClickZoom		= FALSE;					// If set to TRUE will disable zooming when a double click occurs
+    var $disableMapTypeControl		= FALSE;					// If set to TRUE will hide the MapType control (ie. Map, Satellite, Hybrid, Terrain)
+    var $disableNavigationControl	= FALSE;					// If set to TRUE will hide the Navigation control (ie. zoom in/out, pan)
+    var $disableScaleControl		= FALSE;					// If set to TRUE will hide the Scale control
+    var $disableStreetViewControl	= FALSE;					// If set to TRUE will hide the Street View control
+    var $draggable					= TRUE;						// If set to FALSE will prevent the map from being dragged around
+    var $draggableCursor			= '';						// The name or url of the cursor to display on a draggable object
+    var $draggingCursor				= '';						// The name or url of the cursor to display when an object is being dragged
+    var $geocodeCaching				= FALSE;					// If set to TRUE will cache any geocode requests made when an address is used instead of a lat/long. Requires DB table to be created (see documentation)
+    var $https						= FALSE;					// If set to TRUE will load the Google Maps JavaScript API over HTTPS, allowing you to utilize the API within your HTTPS secure application
+    var $navigationControlPosition	= '';						// The position of the Navigation control, eg. 'BOTTOM_RIGHT'
+    var $infowindowMaxWidth			= 0;						// The maximum width of the infowindow in pixels. Expecting an integer without units
+    var $keyboardShortcuts			= TRUE;						// If set to FALSE will disable to map being controlled via the keyboard
+    var $jsfile						= '';						// Set this to the path of an external JS file if you wish the JavaScript to be placed in a file rather than output directly into the <head></head> section. The library will try to create the file if it does not exist already. Please ensure the destination file is writeable
+    var $kmlLayerURL				= '';						// A URL to publicly available KML or GeoRSS data for displaying geographic information. Multiple KML layers can be passed in by using an array of URL's. Note, if using multiple you'll probably have to set $kmlLayerPreserveViewport to true and manually set map center and zoom
+    var $kmlLayerPreserveViewport	= FALSE;					// Specifies whether the map should be adjusted to the bounds of the KmlLayer's contents. By default the map is zoomed and positioned to show the entirety of the layer's contents
+    var $language					= '';						// The map will by default load in the language of the browser. This can be overriden however here. For a full list of codes see https://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1
+    var $loadAsynchronously			= FALSE;					// Load the map and API asynchronously once the page has loaded
+    var $map_div_id					= "map_canvas";				// The ID of the <div></div> that is output which contains the map
+    var $map_height					= "450px";					// The height of the map container. Any units (ie 'px') can be used. If no units are provided 'px' will be presumed
+    var $map_name					= "map";					// The JS reference to the map. Currently not used but to be used in the future when multiple maps are supported
+    var $map_type					= "ROADMAP";				// The default MapType. Values accepted are 'HYBRID', 'ROADMAP', 'SATELLITE' or 'TERRAIN'
+    var $map_types_available		= array();					// The other MapTypes available for selection on the map
+    var $map_width					= "100%";					// The width of the map container. Any units (ie 'px') can be used. If no units are provided 'px' will be presumed
+    var $maps_loaded				= 0;						// Counter which keeps track of how many maps have been created to avoid standard functions being output twice
+    var $mapTypeControlPosition		= '';						// The position of the MapType control, eg. 'BOTTOM_RIGHT'
+    var $mapTypeControlStyle		= '';						// The style of the MapType control. blank, 'DROPDOWN_MENU' or 'HORIZONTAL_BAR' values accepted.
+    var $minzoom					= '';						// The minimum zoom level which will be displayed on the map
+    var $maxzoom					= '';						// The maximum zoom level which will be displayed on the map
+    var $minifyJS					= FALSE;					// If TRUE will run the JavaScript through Jsmin.php (this file and PHP5+ required) to minify the code
+    var $noClear					= FALSE;					// If TRUE do not clear the contents of the map div
+    var $onboundschanged			= '';						// The JavaScript action to perform when the viewport bounds have changed
+    var $oncenterchanged			= '';						// The JavaScript action to perform when themap center property changes
+    var $onclick					= '';						// The JavaScript action to perform when the map is clicked
+    var $ondblclick					= '';						// The JavaScript action to perform when the map is double-clicked
+    var $ondrag						= '';						// The JavaScript action to perform while the map is dragged
+    var $ondragend					= '';						// The JavaScript action to perform when the user stops dragging the map
+    var $ondragstart				= '';						// The JavaScript action to perform when the user starts dragging the map
+    var $onidle						= '';						// The JavaScript action to perform when the map becomes idle after panning or zooming
+    var $onload						= '';						// The JavaScript action to perform when the map first loads. This library hi-jacks the window.load event so add any bespoke code using this option
+    var $onmousemove				= '';						// The JavaScript action to perform when the user's mouse moves over the map container
+    var $onmouseout					= '';						// The JavaScript action to perform when the user's mouse exits the map container
+    var $onmouseover				= '';						// The JavaScript action to perform when the user's mouse enters the map container
+    var $onresize					= '';						// The JavaScript action to perform when the maps div changes size
+    var $onrightclick				= '';						// The JavaScript action to perform when the map is right-clicked
+    var $ontilesloaded				= '';						// The JavaScript action to perform when the visible tiles have finished loading
+    var $onzoomchanged				= '';						// The JavaScript action to perform when the maps zoom property changes
+    var	$panoramio					= FALSE;					// If TRUE will add photos from Panoramio as a layer to your maps as a series of large and small photo icons
+    var	$panoramioTag				= '';						// Restrict the set of Panoramio photos shown to those matching a certain textual tag
+    var	$panoramioUser				= '';						// Restrict the set of Panoramio photos shown to those matching a particular user
+    var $region						= '';						// Country code top-level domain (eg "uk") within which to search. Useful if supplying addresses rather than lat/longs
+    var $scaleControlPosition		= '';						// The position of the Scale control, eg. 'BOTTOM_RIGHT'
+    var $scrollwheel				= TRUE;						// If set to FALSE will disable zooming by scrolling of the mouse wheel
+    var $sensor						= FALSE;					// Set to TRUE if being used on a device that can detect a users location
+    var $streetViewAddressControl	= TRUE;						// If set to FALSE will hide the Address control
+    var $streetViewAddressPosition	= '';						// The position of the Address control, eg. 'BOTTOM'
+    var $streetViewControlPosition	= '';						// The position of the Street View control when viewing normal aerial map, eg. 'BOTTOM_RIGHT'
+    var $streetViewCloseButton		= FALSE;					// If set to TRUE will show the close button in the top right. The close button allows users to return to the aerial map
+    var $streetViewLinksControl		= TRUE;						// If set to FALSE will hide the Links control
+    var $streetViewPanControl		= TRUE;						// If set to FALSE will hide the Pan control
+    var $streetViewPanPosition		= '';						// The position of the Scale control, eg. 'TOP_RIGHT'
+    var $streetViewPovHeading		= 0;						// The Street View camera heading in degrees relative to true north. True north is 0, east is 90, south is 180, west is 270
+    var $streetViewPovPitch			= 0;						// The Street View camera pitch in degrees, relative to the street view vehicle. Directly upwards is 90, Directly downwards is -90.
+    var $streetViewPovZoom			= 0;						// The Street View zoom level. Fully zoomed-out is level 0, zooming in increases the zoom level.
+    var $streetViewZoomControl		= TRUE;						// If set to FALSE will hide the Zoom control
+    var $streetViewZoomPosition		= '';						// The position of the Scale control, eg. 'TOP_RIGHT'
+    var $streetViewZoomStyle		= '';						// The size of the Street View zoom control. blank, 'SMALL' or 'LARGE' values accepted.
+    var $styles						= array();					// An array of styles used to colour aspects of the map and turn points of interest on and off
+    var $stylesAsMapTypes			= false;					// If applying styles, whether to apply them to the default map or add them as additional map types
+    var $stylesAsMapTypesDefault	= '';						// If $stylesAsMapTypes is true the default style. Should contain the 'Name' of the style
+    var	$tilt						= 0;						// The angle of tilt. Currently only supports the values 0 and 45 in SATELLITE and HYBRID map types and at certain zoom levels
+    var	$trafficOverlay				= FALSE;					// If set to TRUE will overlay traffic information onto the map by default
+    var	$version					= "3";						// Version of the API being used. Not currently used in the library
+    var $zoom						= 13;						// The default zoom level of the map. If set to "auto" will autozoom/center to fit in all visible markers. If "auto", also overrides the $center parameter
+    var $zoomControlPosition		= '';						// The position of the Zoom control, eg. 'BOTTOM_RIGHT'
+    var $zoomControlStyle			= '';						// The size of the zoom control. blank, 'SMALL' or 'LARGE' values accepted.
 
-    public $class = '';                        // A class name if wishing to style the map further through CSS. Can also be useful if wanting it to be responsive etc.
-    public $cluster = false;                    // Whether to cluster markers
-    public $clusterGridSize = 60;                        // The grid size of a cluster in pixels
-    public $clusterMaxZoom = '';                        // The maximum zoom level that a marker can be part of a cluster
-    public $clusterZoomOnClick = true;                        // Whether the default behaviour of clicking on a cluster is to zoom into it
-    public $clusterAverageCenter = false;                    // Whether the center of each cluster should be the average of all markers in the cluster
-    public $clusterMinimumClusterSize = 2;                        // The minimum number of markers to be in a cluster before the markers are hidden and a count is shown
-    public $disableDefaultUI = false;                    // If set to TRUE will hide the default controls (ie. zoom, scale etc)
-    public $disableDoubleClickZoom = false;                    // If set to TRUE will disable zooming when a double click occurs
-    public $disableMapTypeControl = false;                    // If set to TRUE will hide the MapType control (ie. Map, Satellite, Hybrid, Terrain)
-    public $disableNavigationControl = false;                    // If set to TRUE will hide the Navigation control (ie. zoom in/out, pan)
-    public $disableScaleControl = false;                    // If set to TRUE will hide the Scale control
-    public $disableStreetViewControl = false;                    // If set to TRUE will hide the Street View control
-    public $draggable = true;                        // If set to FALSE will prevent the map from being dragged around
-    public $draggableCursor = '';                        // The name or url of the cursor to display on a draggable object
-    public $draggingCursor = '';                        // The name or url of the cursor to display when an object is being dragged
-    public $geocodeCaching = false;                    // If set to TRUE will cache any geocode requests made when an address is used instead of a lat/long. Requires DB table to be created (see documentation)
-    public $https = false;                    // If set to TRUE will load the Google Maps JavaScript API over HTTPS, allowing you to utilize the API within your HTTPS secure application
-    public $navigationControlPosition = '';                        // The position of the Navigation control, eg. 'BOTTOM_RIGHT'
-    public $infowindowMaxWidth = 0;                        // The maximum width of the infowindow in pixels. Expecting an integer without units
-    public $keyboardShortcuts = true;                        // If set to FALSE will disable to map being controlled via the keyboard
-    public $jsfile = '';                        // Set this to the path of an external JS file if you wish the JavaScript to be placed in a file rather than output directly into the <head></head> section. The library will try to create the file if it does not exist already. Please ensure the destination file is writeable
-    public $kmlLayerURL = '';                        // A URL to publicly available KML or GeoRSS data for displaying geographic information. Multiple KML layers can be passed in by using an array of URL's. Note, if using multiple you'll probably have to set $kmlLayerPreserveViewport to true and manually set map center and zoom
-    public $kmlLayerPreserveViewport = false;                    // Specifies whether the map should be adjusted to the bounds of the KmlLayer's contents. By default the map is zoomed and positioned to show the entirety of the layer's contents
-    public $language = '';                        // The map will by default load in the language of the browser. This can be overriden however here. For a full list of codes see https://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1
-    public $loadAsynchronously = false;                    // Load the map and API asynchronously once the page has loaded
-    public $map_div_id = "map_canvas";                // The ID of the <div></div> that is output which contains the map
-    public $map_height = "450px";                    // The height of the map container. Any units (ie 'px') can be used. If no units are provided 'px' will be presumed
-    public $map_name = "map";                    // The JS reference to the map. Currently not used but to be used in the future when multiple maps are supported
-    public $map_type = "ROADMAP";                // The default MapType. Values accepted are 'HYBRID', 'ROADMAP', 'SATELLITE' or 'TERRAIN'
-    public $map_types_available = array();                    // The other MapTypes available for selection on the map
-    public $map_width = "100%";                    // The width of the map container. Any units (ie 'px') can be used. If no units are provided 'px' will be presumed
-    public $maps_loaded = 0;                        // Counter which keeps track of how many maps have been created to avoid standard functions being output twice
-    public $mapTypeControlPosition = '';                        // The position of the MapType control, eg. 'BOTTOM_RIGHT'
-    public $mapTypeControlStyle = '';                        // The style of the MapType control. blank, 'DROPDOWN_MENU' or 'HORIZONTAL_BAR' values accepted.
-    public $minzoom = '';                        // The minimum zoom level which will be displayed on the map
-    public $maxzoom = '';                        // The maximum zoom level which will be displayed on the map
-    public $minifyJS = false;                    // If TRUE will run the JavaScript through Jsmin.php (this file and PHP5+ required) to minify the code
-    public $noClear = false;                    // If TRUE do not clear the contents of the map div
-    public $onboundschanged = '';                        // The JavaScript action to perform when the viewport bounds have changed
-    public $oncenterchanged = '';                        // The JavaScript action to perform when themap center property changes
-    public $onclick = '';                        // The JavaScript action to perform when the map is clicked
-    public $ondblclick = '';                        // The JavaScript action to perform when the map is double-clicked
-    public $ondrag = '';                        // The JavaScript action to perform while the map is dragged
-    public $ondragend = '';                        // The JavaScript action to perform when the user stops dragging the map
-    public $ondragstart = '';                        // The JavaScript action to perform when the user starts dragging the map
-    public $onidle = '';                        // The JavaScript action to perform when the map becomes idle after panning or zooming
-    public $onload = '';                        // The JavaScript action to perform when the map first loads. This library hi-jacks the window.load event so add any bespoke code using this option
-    public $onmousemove = '';                        // The JavaScript action to perform when the user's mouse moves over the map container
-    public $onmouseout = '';                        // The JavaScript action to perform when the user's mouse exits the map container
-    public $onmouseover = '';                        // The JavaScript action to perform when the user's mouse enters the map container
-    public $onresize = '';                        // The JavaScript action to perform when the maps div changes size
-    public $onrightclick = '';                        // The JavaScript action to perform when the map is right-clicked
-    public $ontilesloaded = '';                        // The JavaScript action to perform when the visible tiles have finished loading
-    public $onzoomchanged = '';                        // The JavaScript action to perform when the maps zoom property changes
-    public $panoramio = false;                    // If TRUE will add photos from Panoramio as a layer to your maps as a series of large and small photo icons
-    public $panoramioTag = '';                        // Restrict the set of Panoramio photos shown to those matching a certain textual tag
-    public $panoramioUser = '';                        // Restrict the set of Panoramio photos shown to those matching a particular user
-    public $region = '';                        // Country code top-level domain (eg "uk") within which to search. Useful if supplying addresses rather than lat/longs
-    public $scaleControlPosition = '';                        // The position of the Scale control, eg. 'BOTTOM_RIGHT'
-    public $scrollwheel = true;                        // If set to FALSE will disable zooming by scrolling of the mouse wheel
-    public $sensor = false;                    // Set to TRUE if being used on a device that can detect a users location
-    public $streetViewAddressControl = true;                        // If set to FALSE will hide the Address control
-    public $streetViewAddressPosition = '';                        // The position of the Address control, eg. 'BOTTOM'
-    public $streetViewControlPosition = '';                        // The position of the Street View control when viewing normal aerial map, eg. 'BOTTOM_RIGHT'
-    public $streetViewCloseButton = false;                    // If set to TRUE will show the close button in the top right. The close button allows users to return to the aerial map
-    public $streetViewLinksControl = true;                        // If set to FALSE will hide the Links control
-    public $streetViewPanControl = true;                        // If set to FALSE will hide the Pan control
-    public $streetViewPanPosition = '';                        // The position of the Scale control, eg. 'TOP_RIGHT'
-    public $streetViewPovHeading = 0;                        // The Street View camera heading in degrees relative to true north. True north is 0, east is 90, south is 180, west is 270
-    public $streetViewPovPitch = 0;                        // The Street View camera pitch in degrees, relative to the street view vehicle. Directly upwards is 90, Directly downwards is -90.
-    public $streetViewPovZoom = 0;                        // The Street View zoom level. Fully zoomed-out is level 0, zooming in increases the zoom level.
-    public $streetViewZoomControl = true;                        // If set to FALSE will hide the Zoom control
-    public $streetViewZoomPosition = '';                        // The position of the Scale control, eg. 'TOP_RIGHT'
-    public $streetViewZoomStyle = '';                        // The size of the Street View zoom control. blank, 'SMALL' or 'LARGE' values accepted.
-    public $styles = array();                    // An array of styles used to colour aspects of the map and turn points of interest on and off
-    public $stylesAsMapTypes = false;                    // If applying styles, whether to apply them to the default map or add them as additional map types
-    public $stylesAsMapTypesDefault = '';                        // If $stylesAsMapTypes is true the default style. Should contain the 'Name' of the style
-    public $tilt = 0;                        // The angle of tilt. Currently only supports the values 0 and 45 in SATELLITE and HYBRID map types and at certain zoom levels
-    public $trafficOverlay = false;                    // If set to TRUE will overlay traffic information onto the map by default
-    public $version = "3";                        // Version of the API being used. Not currently used in the library
-    public $zoom = 13;                        // The default zoom level of the map. If set to "auto" will autozoom/center to fit in all visible markers. If "auto", also overrides the $center parameter
-    public $zoomControlPosition = '';                        // The position of the Zoom control, eg. 'BOTTOM_RIGHT'
-    public $zoomControlStyle = '';                        // The size of the zoom control. blank, 'SMALL' or 'LARGE' values accepted.
+    var	$markers					= array();					// An array used by the library to store the markers as they are produced
+    var $markersInfo				= array();					// An array containing marker information (id, latitude, longitude etc) for use elsewhere
+    var	$polylines					= array();					// An array used by the library to store the polylines as they are produced
+    var	$polygons					= array();					// An array used by the library to store the polygons as they are produced
+    var	$circles					= array();					// An array used by the library to store the circles as they are produced
+    var	$rectangles					= array();					// An array used by the library to store the rectangles as they are produced
+    var	$overlays					= array();					// An array used by the library to store the overlays as they are produced
 
-    public $markers = array();                    // An array used by the library to store the markers as they are produced
-    public $markersInfo = array();                    // An array containing marker information (id, latitude, longitude etc) for use elsewhere
-    public $polylines = array();                    // An array used by the library to store the polylines as they are produced
-    public $polygons = array();                    // An array used by the library to store the polygons as they are produced
-    public $circles = array();                    // An array used by the library to store the circles as they are produced
-    public $rectangles = array();                    // An array used by the library to store the rectangles as they are produced
-    public $overlays = array();                    // An array used by the library to store the overlays as they are produced
+    var $directions					= FALSE;					// Whether or not the map will be used to show directions
+    var $directionsStart			= "";						// The starting location (lat/long co-ordinate or address) of the directions. Set to 'auto' to default it to the users location
+    var $directionsEnd				= "";						// The destination point (lat/long co-ordinate or address) of the directions. Set to 'auto' to default it to the users location
+    var $directionsDivID			= "";						// An element's ID on the page where textual directions will be output to. Leave blank if not required
+    var $directionsMode				= "DRIVING"; 				// DRIVING, WALKING or BICYCLING (US Only) - The vehicle/mode of transport to show directions for
+    var $directionsAvoidTolls		= FALSE;					// Whether or not directions should avoid tolls
+    var $directionsAvoidHighways	= FALSE;					// Whether or not directions should avoid highways
+    var $directionsDraggable		= FALSE;					// Whether or not directions on the map are draggable
+    var $directionsChanged			= "";						// JavaScript to perform when directions are dragged
+    var $directionsUnits			= "";						// 'metric' for kilometers and meters or 'imperial for miles and feet. Leave blank and it will default to the region or country of where directions are being obtained
+    var $directionsWaypointArray    = array();					// An array of waypoints. eg array("Boston, MA", "Times Square, NY");
+    var $directionsWaypointsOptimize= FALSE;					// Should the waypoints be optimised? If TRUE, waypoints will be re-ordered to provide the most efficient route.
 
-    public $directions = false;                    // Whether or not the map will be used to show directions
-    public $directionsStart = "";                        // The starting location (lat/long co-ordinate or address) of the directions. Set to 'auto' to default it to the users location
-    public $directionsEnd = "";                        // The destination point (lat/long co-ordinate or address) of the directions. Set to 'auto' to default it to the users location
-    public $directionsDivID = "";                        // An element's ID on the page where textual directions will be output to. Leave blank if not required
-    public $directionsMode = "DRIVING";                // DRIVING, WALKING or BICYCLING (US Only) - The vehicle/mode of transport to show directions for
-    public $directionsAvoidTolls = false;                    // Whether or not directions should avoid tolls
-    public $directionsAvoidHighways = false;                    // Whether or not directions should avoid highways
-    public $directionsDraggable = false;                    // Whether or not directions on the map are draggable
-    public $directionsChanged = "";                        // JavaScript to perform when directions are dragged
-    public $directionsUnits = "";                        // 'metric' for kilometers and meters or 'imperial for miles and feet. Leave blank and it will default to the region or country of where directions are being obtained
-    public $directionsWaypointArray = array();                    // An array of waypoints. eg array("Boston, MA", "Times Square, NY");
-    public $directionsWaypointsOptimize = false;                    // Should the waypoints be optimised? If TRUE, waypoints will be re-ordered to provide the most efficient route.
+    var $drawing					= FALSE;					// Whether or not the drawing library tools will be loaded
+    var $drawingControl				= TRUE;						// If set to FALSE will hide the Drawing Manager control
+    var $drawingControlPosition		= 'TOP_CENTER';				// The position of the Drawing Manager control, eg. 'TOP_RIGHT'
+    var $drawingDefaultMode			= 'marker';					// The default mode for the Drawing Manager. Accepted values are marker, polygon, polyline, rectangle, circle, or null. null means that the user can interact with the map as normal when the map loads, and clicks do not draw anything.
+    var $drawingModes				= array();					// An array of modes available for use. Accepted values are marker, polygon, polyline, rectangle, circle
+    var $drawingOnComplete			= array();					// An array of JS to execute when shapes are completed, one array element per shape. For example: array('circle'=>'JS here', 'polygon'=>'JS here');
+    var $drawingOnEdit				= array();					// An array of JS to execute when shapes are changed/resized, one array element per shape. For example: array('circle'=>'JS here', 'polygon'=>'JS here');
 
-    public $drawing = false;                    // Whether or not the drawing library tools will be loaded
-    public $drawingControl = true;                        // If set to FALSE will hide the Drawing Manager control
-    public $drawingControlPosition = 'TOP_CENTER';                // The position of the Drawing Manager control, eg. 'TOP_RIGHT'
-    public $drawingDefaultMode = 'marker';                    // The default mode for the Drawing Manager. Accepted values are marker, polygon, polyline, rectangle, circle, or null. null means that the user can interact with the map as normal when the map loads, and clicks do not draw anything.
-    public $drawingModes = array();                    // An array of modes available for use. Accepted values are marker, polygon, polyline, rectangle, circle
-    public $drawingOnComplete = array();                    // An array of JS to execute when shapes are completed, one array element per shape. For example: array('circle'=>'JS here', 'polygon'=>'JS here');
-    public $drawingOnEdit = array();                    // An array of JS to execute when shapes are changed/resized, one array element per shape. For example: array('circle'=>'JS here', 'polygon'=>'JS here');
-
-    public $places = false;                    // Whether or not the map will be used to show places
-    public $placesLocation = '';                        // A point (lat/long co-ordinate or address) on the map if the search for places is based around a central point
-    public $placesRadius = 0;                        // The radius (in meters) if search is based around a central position
-    public $placesLocationSW = '';                        // If preferring to search within bounds the South-West position (latitude/longitude coordinate OR address)
-    public $placesLocationNE = '';                        // If preferring to search within bounds the North-East position (latitude/longitude coordinate OR address)
-    public $placesTypes = array();                    // The types of places to search for. For a list of supported types see http://code.google.com/apis/maps/documentation/places/supported_types.html
-    public $placesName = '';                        // A term to be matched against when searching for places to display on the map
-    public $placesAutocompleteInputID = '';                        // The ID attribute of the textfield that the autocomplete should effect
-    public $placesAutocompleteTypes = array();                    // The types of places for the autocomplete to return. Options can be seen here https://developers.google.com/maps/documentation/javascript/places#places_autocomplete but include 'establishment' to only return business results, '(cities)', or '(regions)'
-    public $placesAutocompleteBoundSW = '';                        // By specifying an area in which to search for Places, the results are biased towards, but not restricted to, Places contained within these bounds.
-    public $placesAutocompleteBoundNE = '';                        // Both South-West (lat/long co-ordinate or address) and North-East (lat/long co-ordinate or address) values are required if wishing to set bounds
-    public $placesAutocompleteBoundsMap = false;                    // An alternative to setting the SW and NE bounds is to use the bounds of the current viewport. If set to TRUE, the bounds will be set to the viewport of the visible map, even if dragged or zoomed
-    public $placesAutocompleteOnChange = '';                        // The JavaScript action to perform when a place is selected
+    var $places						= FALSE;					// Whether or not the map will be used to show places
+    var $placesLocation				= '';						// A point (lat/long co-ordinate or address) on the map if the search for places is based around a central point
+    var $placesRadius				= 0;						// The radius (in meters) if search is based around a central position
+    var $placesLocationSW			= '';						// If preferring to search within bounds the South-West position (latitude/longitude coordinate OR address)
+    var $placesLocationNE			= '';						// If preferring to search within bounds the North-East position (latitude/longitude coordinate OR address)
+    var $placesTypes				= array();					// The types of places to search for. For a list of supported types see http://code.google.com/apis/maps/documentation/places/supported_types.html
+    var $placesName					= '';						// A term to be matched against when searching for places to display on the map
+    var $placesAutocompleteInputID	= '';						// The ID attribute of the textfield that the autocomplete should effect
+    var $placesAutocompleteTypes	= array();					// The types of places for the autocomplete to return. Options can be seen here https://developers.google.com/maps/documentation/javascript/places#places_autocomplete but include 'establishment' to only return business results, '(cities)', or '(regions)'
+    var $placesAutocompleteBoundSW	= '';						// By specifying an area in which to search for Places, the results are biased towards, but not restricted to, Places contained within these bounds.
+    var $placesAutocompleteBoundNE	= '';						// Both South-West (lat/long co-ordinate or address) and North-East (lat/long co-ordinate or address) values are required if wishing to set bounds
+    var $placesAutocompleteBoundsMap= FALSE;					// An alternative to setting the SW and NE bounds is to use the bounds of the current viewport. If set to TRUE, the bounds will be set to the viewport of the visible map, even if dragged or zoomed
+    var $placesAutocompleteOnChange	= '';						// The JavaScript action to perform when a place is selected
 
     public function __construct($config = array())
     {
-        if (count($config) > 0) {
+        if (count($config) > 0)
+        {
             $this->initialize($config);
         }
 
@@ -156,68 +155,73 @@ class Phpgmaps
 
     public function initialize($config = array())
     {
-        foreach ($config as $key => $val) {
-            if (isset($this->$key)) {
+        foreach ($config as $key => $val)
+        {
+            if (isset($this->$key))
+            {
                 $this->$key = $val;
             }
         }
 
-        if ($this->sensor) {
-            $this->sensor = "true";
-        } else {
-            $this->sensor = "false";
-        }
+        if ($this->sensor) { $this->sensor = "true"; }else{ $this->sensor = "false"; }
+
     }
 
     public function add_marker($params = array())
     {
+
         $marker = array();
         $this->markersInfo['marker_'.count($this->markers)] = array();
 
-        $marker['position'] = '';                                // The position (lat/long co-ordinate or address) at which the marker will appear
-        $marker['infowindow_content'] = '';                        // If not blank, creates an infowindow (aka bubble) with the content provided. Can be plain text or HTML
-        $marker['id'] = '';                                        // The unique identifier of the marker suffix (ie. marker_yourID). If blank, this will default to marker_X where X is an incremental number
-        $marker['clickable'] = true;                            // Defines if the marker is clickable
-        $marker['cursor'] = '';                                    // The name or url of the cursor to display on hover
-        $marker['draggable'] = false;                            // Defines if the marker is draggable
-        $marker['flat'] = false;                                // If set to TRUE will not display a shadow beneath the icon
-        $marker['icon'] = '';                                    // The name or url of the icon to use for the marker
-        $marker['icon_size'] = '';                                // The display size of the sprite or image being used. When using sprites, you must specify the sprite size. Expecting two comma-separated values for width and height respectively (ie '20,30'). See https://developers.google.com/maps/documentation/javascript/3.exp/reference#Icon
-        $marker['icon_scaledSize'] = '';                        // The size of the entire image after scaling, if any. Use this property to stretch/shrink an image or a sprite. Expecting two comma-separated values for width and height respectively (ie '20,30')
-        $marker['icon_origin'] = '';                            // If using a sprite, the position of the image within the sprite. Expecting two comma-separated values for distance from the top and left respectively (ie '20,30')
-        $marker['icon_anchor'] = '';                            // The position at which to anchor an image in correspondance to the location of the marker on the map. By default, the anchor is located along the center point of the bottom of the image. Expecting two comma-separated values (ie '20,30'). Credit to https://github.com/colethorsen
-        $marker['animation'] = '';                                // blank, 'DROP' or 'BOUNCE'
-        $marker['onclick'] = '';                                // JavaScript performed when a marker is clicked
-        $marker['ondblclick'] = '';                                // JavaScript performed when a marker is double-clicked
-        $marker['ondrag'] = '';                                    // JavaScript repeatedly performed while the marker is being dragged
-        $marker['ondragstart'] = '';                            // JavaScript performed when a marker is started to be dragged
-        $marker['ondragend'] = '';                                // JavaScript performed when a draggable marker is dropped
-        $marker['onmousedown'] = '';                            // JavaScript performed when a mousedown event occurs on a marker
-        $marker['onmouseout'] = '';                                // JavaScript performed when the mouse leaves the area of the marker icon
-        $marker['onmouseover'] = '';                            // JavaScript performed when the mouse enters the area of the marker icon
-        $marker['onmouseup'] = '';                                // JavaScript performed when a mouseup event occurs on a marker
-        $marker['onpositionchanged'] = '';                        // JavaScript performed when the markers position changes
-        $marker['onrightclick'] = '';                            // JavaScript performed when a right-click occurs on a marker
-        $marker['raiseondrag'] = true;                            // If FALSE, disables the raising and lowering of the icon when a marker is being dragged
-        $marker['shadow'] = '';                                    // The name or url of the icon's shadow
-        $marker['title'] = '';                                    // The tooltip text to show on hover
-        $marker['visible'] = true;                                // Defines if the marker is visible by default
-        $marker['zIndex'] = '';                                    // The zIndex of the marker. If two markers overlap, the marker with the higher zIndex will appear on top
+        $marker['position'] = '';								// The position (lat/long co-ordinate or address) at which the marker will appear
+        $marker['infowindow_content'] = '';						// If not blank, creates an infowindow (aka bubble) with the content provided. Can be plain text or HTML
+        $marker['id'] = '';										// The unique identifier of the marker suffix (ie. marker_yourID). If blank, this will default to marker_X where X is an incremental number
+        $marker['clickable'] = TRUE;							// Defines if the marker is clickable
+        $marker['cursor'] = '';									// The name or url of the cursor to display on hover
+        $marker['draggable'] = FALSE;							// Defines if the marker is draggable
+        $marker['flat'] = FALSE;								// If set to TRUE will not display a shadow beneath the icon
+        $marker['icon'] = '';									// The name or url of the icon to use for the marker
+        $marker['icon_size'] = '';								// The display size of the sprite or image being used. When using sprites, you must specify the sprite size. Expecting two comma-separated values for width and height respectively (ie '20,30'). See https://developers.google.com/maps/documentation/javascript/3.exp/reference#Icon
+        $marker['icon_scaledSize'] = '';						// The size of the entire image after scaling, if any. Use this property to stretch/shrink an image or a sprite. Expecting two comma-separated values for width and height respectively (ie '20,30')
+        $marker['icon_origin'] = '';							// If using a sprite, the position of the image within the sprite. Expecting two comma-separated values for distance from the top and left respectively (ie '20,30')
+        $marker['icon_anchor'] = '';							// The position at which to anchor an image in correspondance to the location of the marker on the map. By default, the anchor is located along the center point of the bottom of the image. Expecting two comma-separated values (ie '20,30'). Credit to https://github.com/colethorsen
+        $marker['animation'] = ''; 								// blank, 'DROP' or 'BOUNCE'
+        $marker['onclick'] = '';								// JavaScript performed when a marker is clicked
+        $marker['ondblclick'] = '';								// JavaScript performed when a marker is double-clicked
+        $marker['ondrag'] = '';									// JavaScript repeatedly performed while the marker is being dragged
+        $marker['ondragstart'] = '';							// JavaScript performed when a marker is started to be dragged
+        $marker['ondragend'] = '';								// JavaScript performed when a draggable marker is dropped
+        $marker['onmousedown'] = '';							// JavaScript performed when a mousedown event occurs on a marker
+        $marker['onmouseout'] = '';								// JavaScript performed when the mouse leaves the area of the marker icon
+        $marker['onmouseover'] = '';							// JavaScript performed when the mouse enters the area of the marker icon
+        $marker['onmouseup'] = '';								// JavaScript performed when a mouseup event occurs on a marker
+        $marker['onpositionchanged'] = '';						// JavaScript performed when the markers position changes
+        $marker['onrightclick'] = '';							// JavaScript performed when a right-click occurs on a marker
+        $marker['raiseondrag'] = TRUE;							// If FALSE, disables the raising and lowering of the icon when a marker is being dragged
+        $marker['shadow'] = '';									// The name or url of the icon's shadow
+        $marker['title'] = '';									// The tooltip text to show on hover
+        $marker['visible'] = TRUE;								// Defines if the marker is visible by default
+        $marker['zIndex'] = '';									// The zIndex of the marker. If two markers overlap, the marker with the higher zIndex will appear on top
 
         $marker_output = '';
 
         foreach ($params as $key => $value) {
+
             if (isset($marker[$key])) {
+
                 $marker[$key] = $value;
+
             }
+
         }
 
         $marker_id = count($this->markers);
-        if (trim($marker['id']) != "") {
+        if (trim($marker['id']) != "")
+        {
             $marker_id = $marker['id'];
         }
 
-        if ($marker['position'] != "") {
+        if ($marker['position']!="") {
             if ($this->is_lat_long($marker['position'])) {
                 $marker_output .= '
 			var myLatlng = new google.maps.LatLng('.$marker['position'].');
@@ -225,7 +229,7 @@ class Phpgmaps
                 $explodePosition = explode(",", $marker['position']);
                 $this->markersInfo['marker_'.$marker_id]['latitude'] = trim($explodePosition[0]);
                 $this->markersInfo['marker_'.$marker_id]['longitude'] = trim($explodePosition[1]);
-            } else {
+            }else{
                 $lat_long = $this->get_lat_long_from_address($marker['position']);
                 $marker_output .= '
 			var myLatlng = new google.maps.LatLng('.$lat_long[0].', '.$lat_long[1].');';
@@ -234,23 +238,23 @@ class Phpgmaps
             }
         }
 
-        if ($marker['icon'] != "") {
+        if ($marker['icon']!="") {
             $marker_output .= '
 				var marker_icon = {
 					url: "'.$marker['icon'].'"';
-            if ($marker['icon_size'] != "") {
+            if ($marker['icon_size']!="") {
                 $marker_output .= ',
 					size: new google.maps.Size('.$marker['icon_size'].')';
             }
-            if ($marker['icon_scaledSize'] != "") {
+            if ($marker['icon_scaledSize']!="") {
                 $marker_output .= ',
 					scaledSize: new google.maps.Size('.$marker['icon_scaledSize'].')';
             }
-            if ($marker['icon_origin'] != "") {
+            if ($marker['icon_origin']!="") {
                 $marker_output .= ',
 					origin: new google.maps.Point('.$marker['icon_origin'].')';
             }
-            if ($marker['icon_anchor'] != "") {
+            if ($marker['icon_anchor']!="") {
                 $marker_output .= ',
 					anchor: new google.maps.Point('.$marker['icon_anchor'].')';
             }
@@ -261,7 +265,7 @@ class Phpgmaps
         $marker_output .= '
 			var markerOptions = {
 				map: '.$this->map_name;
-        if ($marker['position'] != "") {
+        if ($marker['position']!="") {
             $marker_output .= ',
 				position: myLatlng';
         }
@@ -269,7 +273,7 @@ class Phpgmaps
             $marker_output .= ',
 				clickable: false';
         }
-        if ($marker['cursor'] != "") {
+        if ($marker['cursor']!="") {
             $marker_output .= ',
 				cursor: "'.$marker['cursor'].'"';
         }
@@ -281,7 +285,7 @@ class Phpgmaps
             $marker_output .= ',
 				flat: true';
         }
-        if ($marker['icon'] != "") {
+        if ($marker['icon']!="") {
             $marker_output .= ',
 				icon: marker_icon';
         }
@@ -289,11 +293,11 @@ class Phpgmaps
             $marker_output .= ',
 				raiseOnDrag: false';
         }
-        if ($marker['shadow'] != "") {
+        if ($marker['shadow']!="") {
             $marker_output .= ',
 				shadow: "'.$marker['shadow'].'"';
         }
-        if ($marker['title'] != "") {
+        if ($marker['title']!="") {
             $marker_output .= ',
 				title: "'.$marker['title'].'"';
             $this->markersInfo['marker_'.$marker_id]['title'] = $marker['title'];
@@ -302,11 +306,11 @@ class Phpgmaps
             $marker_output .= ',
 				visible: false';
         }
-        if ($marker['zIndex'] != "" && is_numeric($marker['zIndex'])) {
+        if ($marker['zIndex']!="" && is_numeric($marker['zIndex'])) {
             $marker_output .= ',
 				zIndex: '.$marker['zIndex'];
         }
-        if ($marker['animation'] != "" && (strtoupper($marker['animation']) == "DROP" || strtoupper($marker['animation'] == "BOUNCE"))) {
+        if ($marker['animation']!="" && (strtoupper($marker['animation'])=="DROP" || strtoupper($marker['animation']=="BOUNCE"))) {
             $marker_output .= ',
 				animation:  google.maps.Animation.'.strtoupper($marker['animation']);
         }
@@ -315,7 +319,7 @@ class Phpgmaps
 			marker_'.$marker_id.' = createMarker_'.$this->map_name.'(markerOptions);
 			';
 
-        if ($marker['infowindow_content'] != "") {
+        if ($marker['infowindow_content']!="") {
 
             // Escape any quotes in the event that HTML is being added to the infowindow
             $marker['infowindow_content'] = str_replace('\"', '"', $marker['infowindow_content']);
@@ -328,15 +332,13 @@ class Phpgmaps
 				iw_'.$this->map_name.'.setContent(this.get("content"));
 				iw_'.$this->map_name.'.open('.$this->map_name.', this);
 			';
-            if ($marker['onclick'] != "") {
-                $marker_output .= $marker['onclick'].'
-			';
-            }
+            if ($marker['onclick']!="") { $marker_output .= $marker['onclick'].'
+			'; }
             $marker_output .= '
 			});
 			';
-        } else {
-            if ($marker['onclick'] != "") {
+        }else{
+            if ($marker['onclick']!="") {
                 $marker_output .= '
 				google.maps.event.addListener(marker_'.$marker_id.', "click", function(event) {
 					'.$marker['onclick'].'
@@ -345,49 +347,49 @@ class Phpgmaps
             }
         }
 
-        if ($marker['ondblclick'] != "") {
+        if ($marker['ondblclick']!="") {
             $marker_output .= '
 			google.maps.event.addListener(marker_'.$marker_id.', "dblclick", function(event) {
 				'.$marker['ondblclick'].'
 			});
 			';
         }
-        if ($marker['onmousedown'] != "") {
+        if ($marker['onmousedown']!="") {
             $marker_output .= '
 			google.maps.event.addListener(marker_'.$marker_id.', "mousedown", function(event) {
 				'.$marker['onmousedown'].'
 			});
 			';
         }
-        if ($marker['onmouseout'] != "") {
+        if ($marker['onmouseout']!="") {
             $marker_output .= '
 			google.maps.event.addListener(marker_'.$marker_id.', "mouseout", function(event) {
 				'.$marker['onmouseout'].'
 			});
 			';
         }
-        if ($marker['onmouseover'] != "") {
+        if ($marker['onmouseover']!="") {
             $marker_output .= '
 			google.maps.event.addListener(marker_'.$marker_id.', "mouseover", function(event) {
 				'.$marker['onmouseover'].'
 			});
 			';
         }
-        if ($marker['onmouseup'] != "") {
+        if ($marker['onmouseup']!="") {
             $marker_output .= '
 			google.maps.event.addListener(marker_'.$marker_id.', "mouseup", function(event) {
 				'.$marker['onmouseup'].'
 			});
 			';
         }
-        if ($marker['onpositionchanged'] != "") {
+        if ($marker['onpositionchanged']!="") {
             $marker_output .= '
 			google.maps.event.addListener(marker_'.$marker_id.', "position_changed", function(event) {
 				'.$marker['onpositionchanged'].'
 			});
 			';
         }
-        if ($marker['onrightclick'] != "") {
+        if ($marker['onrightclick']!="") {
             $marker_output .= '
 			google.maps.event.addListener(marker_'.$marker_id.', "rightclick", function(event) {
 				'.$marker['onrightclick'].'
@@ -396,21 +398,21 @@ class Phpgmaps
         }
 
         if ($marker['draggable']) {
-            if ($marker['ondrag'] != "") {
+            if ($marker['ondrag']!="") {
                 $marker_output .= '
 				google.maps.event.addListener(marker_'.$marker_id.', "drag", function(event) {
 					'.$marker['ondrag'].'
 				});
 				';
             }
-            if ($marker['ondragend'] != "") {
+            if ($marker['ondragend']!="") {
                 $marker_output .= '
 				google.maps.event.addListener(marker_'.$marker_id.', "dragend", function(event) {
 					'.$marker['ondragend'].'
 				});
 				';
             }
-            if ($marker['ondragstart'] != "") {
+            if ($marker['ondragstart']!="") {
                 $marker_output .= '
 				google.maps.event.addListener(marker_'.$marker_id.', "dragstart", function(event) {
 					'.$marker['ondragstart'].'
@@ -420,51 +422,56 @@ class Phpgmaps
         }
 
         array_push($this->markers, $marker_output);
+
     }
 
     public function add_polyline($params = array())
     {
+
         $polyline = array();
 
-        $polyline['points'] = array();                            // An array of latitude/longitude coordinates OR addresses, or a mixture of both. If an address is supplied the Google geocoding service will be used to return a lat/long.
-        $polyline['clickable'] = true;                            // Defines if the polyline is clickable
-        $polyline['strokeColor'] = '#FF0000';                    // The hex value of the polylines color
-        $polyline['strokeOpacity'] = '1.0';                        // The opacity of the polyline. 0 to 1.0
-        $polyline['strokeWeight'] = '2';                        // The thickness of the polyline
-        $polyline['onclick'] = '';                                // JavaScript performed when a polyline is clicked
-        $polyline['ondblclick'] = '';                            // JavaScript performed when a polyline is double-clicked
-        $polyline['onmousedown'] = '';                            // JavaScript performed when a mousedown event occurs on a polyline
-        $polyline['onmousemove'] = '';                            // JavaScript performed when the mouse moves in the area of the polyline
-        $polyline['onmouseout'] = '';                            // JavaScript performed when the mouse leaves the area of the polyline
-        $polyline['onmouseover'] = '';                            // JavaScript performed when the mouse enters the area of the polyline
-        $polyline['onmouseup'] = '';                            // JavaScript performed when a mouseup event occurs on a polyline
-        $polyline['onrightclick'] = '';                            // JavaScript performed when a right-click occurs on a polyline
-        $polyline['zIndex'] = '';                                // The zIndex of the polyline. If two polylines overlap, the polyline with the higher zIndex will appear on top
+        $polyline['points'] = array();							// An array of latitude/longitude coordinates OR addresses, or a mixture of both. If an address is supplied the Google geocoding service will be used to return a lat/long.
+        $polyline['clickable'] = TRUE;							// Defines if the polyline is clickable
+        $polyline['strokeColor'] = '#FF0000';					// The hex value of the polylines color
+        $polyline['strokeOpacity'] = '1.0';						// The opacity of the polyline. 0 to 1.0
+        $polyline['strokeWeight'] = '2';						// The thickness of the polyline
+        $polyline['onclick'] = '';								// JavaScript performed when a polyline is clicked
+        $polyline['ondblclick'] = '';							// JavaScript performed when a polyline is double-clicked
+        $polyline['onmousedown'] = '';							// JavaScript performed when a mousedown event occurs on a polyline
+        $polyline['onmousemove'] = '';							// JavaScript performed when the mouse moves in the area of the polyline
+        $polyline['onmouseout'] = '';							// JavaScript performed when the mouse leaves the area of the polyline
+        $polyline['onmouseover'] = '';							// JavaScript performed when the mouse enters the area of the polyline
+        $polyline['onmouseup'] = '';							// JavaScript performed when a mouseup event occurs on a polyline
+        $polyline['onrightclick'] = '';							// JavaScript performed when a right-click occurs on a polyline
+        $polyline['zIndex'] = '';								// The zIndex of the polyline. If two polylines overlap, the polyline with the higher zIndex will appear on top
 
         $polyline_output = '';
 
         foreach ($params as $key => $value) {
+
             if (isset($polyline[$key])) {
+
                 $polyline[$key] = $value;
+
             }
+
         }
 
         if (count($polyline['points'])) {
+
             $polyline_output .= '
 				var polyline_plan_'.count($this->polylines).' = [';
-            $i = 0;
+            $i=0;
             $lat_long_output = '';
             foreach ($polyline['points'] as $point) {
-                if ($i > 0) {
-                    $polyline_output .= ',';
-                }
+                if ($i>0) { $polyline_output .= ','; }
                 $lat_long_to_push = '';
                 if ($this->is_lat_long($point)) {
                     $lat_long_to_push = $point;
                     $polyline_output .= '
 					new google.maps.LatLng('.$point.')
 					';
-                } else {
+                }else{
                     $lat_long = $this->get_lat_long_from_address($point);
                     $polyline_output .= '
 					new google.maps.LatLng('.$lat_long[0].', '.$lat_long[1].')';
@@ -489,7 +496,7 @@ class Phpgmaps
                 $polyline_output .= ',
 					clickable: false';
             }
-            if ($polyline['zIndex'] != "" && is_numeric($polyline['zIndex'])) {
+            if ($polyline['zIndex']!="" && is_numeric($polyline['zIndex'])) {
                 $polyline_output .= ',
 					zIndex: '.$polyline['zIndex'];
             }
@@ -500,56 +507,56 @@ class Phpgmaps
 
 			';
 
-            if ($polyline['onclick'] != "") {
+            if ($polyline['onclick']!="") {
                 $polyline_output .= '
 				google.maps.event.addListener(polyline_'.count($this->polylines).', "click", function() {
 					'.$polyline['onclick'].'
 				});
 				';
             }
-            if ($polyline['ondblclick'] != "") {
+            if ($polyline['ondblclick']!="") {
                 $polyline_output .= '
 				google.maps.event.addListener(polyline_'.count($this->polylines).', "dblclick", function() {
 					'.$polyline['ondblclick'].'
 				});
 				';
             }
-            if ($polyline['onmousedown'] != "") {
+            if ($polyline['onmousedown']!="") {
                 $polyline_output .= '
 				google.maps.event.addListener(polyline_'.count($this->polylines).', "mousedown", function() {
 					'.$polyline['onmousedown'].'
 				});
 				';
             }
-            if ($polyline['onmousemove'] != "") {
+            if ($polyline['onmousemove']!="") {
                 $polyline_output .= '
 				google.maps.event.addListener(polyline_'.count($this->polylines).', "mousemove", function() {
 					'.$polyline['onmousemove'].'
 				});
 				';
             }
-            if ($polyline['onmouseout'] != "") {
+            if ($polyline['onmouseout']!="") {
                 $polyline_output .= '
 				google.maps.event.addListener(polyline_'.count($this->polylines).', "mouseout", function() {
 					'.$polyline['onmouseout'].'
 				});
 				';
             }
-            if ($polyline['onmouseover'] != "") {
+            if ($polyline['onmouseover']!="") {
                 $polyline_output .= '
 				google.maps.event.addListener(polyline_'.count($this->polylines).', "mouseover", function() {
 					'.$polyline['onmouseover'].'
 				});
 				';
             }
-            if ($polyline['onmouseup'] != "") {
+            if ($polyline['onmouseup']!="") {
                 $polyline_output .= '
 				google.maps.event.addListener(polyline_'.count($this->polylines).', "mouseup", function() {
 					'.$polyline['onmouseup'].'
 				});
 				';
             }
-            if ($polyline['onrightclick'] != "") {
+            if ($polyline['onrightclick']!="") {
                 $polyline_output .= '
 				google.maps.event.addListener(polyline_'.count($this->polylines).', "rightclick", function() {
 					'.$polyline['onrightclick'].'
@@ -558,54 +565,60 @@ class Phpgmaps
             }
 
             array_push($this->polylines, $polyline_output);
+
         }
+
     }
 
     public function add_polygon($params = array())
     {
+
         $polygon = array();
 
-        $polygon['points'] = array();                            // The positions (latitude/longitude coordinates OR addresses) at which the polygon points will appear. NOTE: The first and last elements of the array must be the same
-        $polygon['clickable'] = true;                            // Defines if the polygon is clickable
-        $polygon['strokeColor'] = '#FF0000';                    // The hex value of the polygons border color
-        $polygon['strokeOpacity'] = '0.8';                        // The opacity of the polygon border. 0 to 1.0
-        $polygon['strokeWeight'] = '2';                            // The thickness of the polygon border
-        $polygon['fillColor'] = '#FF0000';                        // The hex value of the polygons fill color
-        $polygon['fillOpacity'] = '0.3';                        // The opacity of the polygons fill
-        $polygon['onclick'] = '';                                // JavaScript performed when a polygon is clicked
-        $polygon['ondblclick'] = '';                            // JavaScript performed when a polygon is double-clicked
-        $polygon['onmousedown'] = '';                            // JavaScript performed when a mousedown event occurs on a polygon
-        $polygon['onmousemove'] = '';                            // JavaScript performed when the mouse moves in the area of the polygon
-        $polygon['onmouseout'] = '';                            // JavaScript performed when the mouse leaves the area of the polygon
-        $polygon['onmouseover'] = '';                            // JavaScript performed when the mouse enters the area of the polygon
-        $polygon['onmouseup'] = '';                                // JavaScript performed when a mouseup event occurs on a polygon
-        $polygon['onrightclick'] = '';                            // JavaScript performed when a right-click occurs on a polygon
-        $polygon['zIndex'] = '';                                // The zIndex of the polygon. If two polygons overlap, the polygon with the higher zIndex will appear on top
+        $polygon['points'] = array();							// The positions (latitude/longitude coordinates OR addresses) at which the polygon points will appear. NOTE: The first and last elements of the array must be the same
+        $polygon['clickable'] = TRUE;							// Defines if the polygon is clickable
+        $polygon['strokeColor'] = '#FF0000';					// The hex value of the polygons border color
+        $polygon['strokeOpacity'] = '0.8';						// The opacity of the polygon border. 0 to 1.0
+        $polygon['strokeWeight'] = '2';							// The thickness of the polygon border
+        $polygon['fillColor'] = '#FF0000';						// The hex value of the polygons fill color
+        $polygon['fillOpacity'] = '0.3';						// The opacity of the polygons fill
+        $polygon['onclick'] = '';								// JavaScript performed when a polygon is clicked
+        $polygon['ondblclick'] = '';							// JavaScript performed when a polygon is double-clicked
+        $polygon['onmousedown'] = '';							// JavaScript performed when a mousedown event occurs on a polygon
+        $polygon['onmousemove'] = '';							// JavaScript performed when the mouse moves in the area of the polygon
+        $polygon['onmouseout'] = '';							// JavaScript performed when the mouse leaves the area of the polygon
+        $polygon['onmouseover'] = '';							// JavaScript performed when the mouse enters the area of the polygon
+        $polygon['onmouseup'] = '';								// JavaScript performed when a mouseup event occurs on a polygon
+        $polygon['onrightclick'] = '';							// JavaScript performed when a right-click occurs on a polygon
+        $polygon['zIndex'] = '';								// The zIndex of the polygon. If two polygons overlap, the polygon with the higher zIndex will appear on top
 
         $polygon_output = '';
 
         foreach ($params as $key => $value) {
+
             if (isset($polygon[$key])) {
+
                 $polygon[$key] = $value;
+
             }
+
         }
 
         if (count($polygon['points'])) {
+
             $polygon_output .= '
 				var polygon_plan_'.count($this->polygons).' = [';
-            $i = 0;
+            $i=0;
             $lat_long_output = '';
             foreach ($polygon['points'] as $point) {
-                if ($i > 0) {
-                    $polygon_output .= ',';
-                }
+                if ($i>0) { $polygon_output .= ','; }
                 $lat_long_to_push = '';
                 if ($this->is_lat_long($point)) {
                     $lat_long_to_push = $point;
                     $polygon_output .= '
 					new google.maps.LatLng('.$point.')
 					';
-                } else {
+                }else{
                     $lat_long = $this->get_lat_long_from_address($point);
                     $polygon_output .= '
 					new google.maps.LatLng('.$lat_long[0].', '.$lat_long[1].')';
@@ -619,6 +632,7 @@ class Phpgmaps
             $polygon_output .= '];';
 
             $polygon_output .= $lat_long_output;
+
         }
 
         $polygon_output .= '
@@ -638,7 +652,7 @@ class Phpgmaps
             $polygon_output .= ',
 				clickable: false';
         }
-        if ($polygon['zIndex'] != "" && is_numeric($polygon['zIndex'])) {
+        if ($polygon['zIndex']!="" && is_numeric($polygon['zIndex'])) {
             $polygon_output .= ',
 				zIndex: '.$polygon['zIndex'];
         }
@@ -649,56 +663,56 @@ class Phpgmaps
 
 		';
 
-        if ($polygon['onclick'] != "") {
+        if ($polygon['onclick']!="") {
             $polygon_output .= '
 			google.maps.event.addListener(polygon_'.count($this->polygons).', "click", function() {
 				'.$polygon['onclick'].'
 			});
 			';
         }
-        if ($polygon['ondblclick'] != "") {
+        if ($polygon['ondblclick']!="") {
             $polygon_output .= '
 			google.maps.event.addListener(polygon_'.count($this->polygons).', "dblclick", function() {
 				'.$polygon['ondblclick'].'
 			});
 			';
         }
-        if ($polygon['onmousedown'] != "") {
+        if ($polygon['onmousedown']!="") {
             $polygon_output .= '
 			google.maps.event.addListener(polygon_'.count($this->polygons).', "mousedown", function() {
 				'.$polygon['onmousedown'].'
 			});
 			';
         }
-        if ($polygon['onmousemove'] != "") {
+        if ($polygon['onmousemove']!="") {
             $polygon_output .= '
 			google.maps.event.addListener(polygon_'.count($this->polygons).', "mousemove", function() {
 				'.$polygon['onmousemove'].'
 			});
 			';
         }
-        if ($polygon['onmouseout'] != "") {
+        if ($polygon['onmouseout']!="") {
             $polygon_output .= '
 			google.maps.event.addListener(polygon_'.count($this->polygons).', "mouseout", function() {
 				'.$polygon['onmouseout'].'
 			});
 			';
         }
-        if ($polygon['onmouseover'] != "") {
+        if ($polygon['onmouseover']!="") {
             $polygon_output .= '
 			google.maps.event.addListener(polygon_'.count($this->polygons).', "mouseover", function() {
 				'.$polygon['onmouseover'].'
 			});
 			';
         }
-        if ($polygon['onmouseup'] != "") {
+        if ($polygon['onmouseup']!="") {
             $polygon_output .= '
 			google.maps.event.addListener(polygon_'.count($this->polygons).', "mouseup", function() {
 				'.$polygon['onmouseup'].'
 			});
 			';
         }
-        if ($polygon['onrightclick'] != "") {
+        if ($polygon['onrightclick']!="") {
             $polygon_output .= '
 			google.maps.event.addListener(polygon_'.count($this->polygons).', "rightclick", function() {
 				'.$polygon['onrightclick'].'
@@ -707,46 +721,53 @@ class Phpgmaps
         }
 
         array_push($this->polygons, $polygon_output);
+
     }
 
     public function add_circle($params = array())
     {
+
         $circle = array();
 
-        $circle['center'] = '';                                    // The center position (latitude/longitude coordinate OR addresse) at which the circle will appear
-        $circle['clickable'] = true;                            // Defines if the circle is clickable
-        $circle['radius'] = 0;                                    // The circle radius (in metres)
-        $circle['strokeColor'] = '0.8';                            // The hex value of the circles border color
-        $circle['strokeOpacity'] = '0.8';                        // The opacity of the circle border
-        $circle['strokeWeight'] = '2';                            // The thickness of the circle border
-        $circle['fillColor'] = '#FF0000';                        // The hex value of the circles fill color
-        $circle['fillOpacity'] = '0.3';                            // The opacity of the circles fill
-        $circle['onclick'] = '';                                // JavaScript performed when a circle is clicked
-        $circle['ondblclick'] = '';                                // JavaScript performed when a circle is double-clicked
-        $circle['onmousedown'] = '';                            // JavaScript performed when a mousedown event occurs on a circle
-        $circle['onmousemove'] = '';                            // JavaScript performed when the mouse moves in the area of the circle
-        $circle['onmouseout'] = '';                                // JavaScript performed when the mouse leaves the area of the circle
-        $circle['onmouseover'] = '';                            // JavaScript performed when the mouse enters the area of the circle
-        $circle['onmouseup'] = '';                                // JavaScript performed when a mouseup event occurs on a circle
-        $circle['onrightclick'] = '';                            // JavaScript performed when a right-click occurs on a circle
-        $circle['zIndex'] = '';                                    // The zIndex of the circle. If two circles overlap, the circle with the higher zIndex will appear on top
+        $circle['center'] = '';									// The center position (latitude/longitude coordinate OR addresse) at which the circle will appear
+        $circle['clickable'] = TRUE;							// Defines if the circle is clickable
+        $circle['radius'] = 0;									// The circle radius (in metres)
+        $circle['strokeColor'] = '0.8';							// The hex value of the circles border color
+        $circle['strokeOpacity'] = '0.8';						// The opacity of the circle border
+        $circle['strokeWeight'] = '2';							// The thickness of the circle border
+        $circle['fillColor'] = '#FF0000';						// The hex value of the circles fill color
+        $circle['fillOpacity'] = '0.3';							// The opacity of the circles fill
+        $circle['onclick'] = '';								// JavaScript performed when a circle is clicked
+        $circle['ondblclick'] = '';								// JavaScript performed when a circle is double-clicked
+        $circle['onmousedown'] = '';							// JavaScript performed when a mousedown event occurs on a circle
+        $circle['onmousemove'] = '';							// JavaScript performed when the mouse moves in the area of the circle
+        $circle['onmouseout'] = '';								// JavaScript performed when the mouse leaves the area of the circle
+        $circle['onmouseover'] = '';							// JavaScript performed when the mouse enters the area of the circle
+        $circle['onmouseup'] = '';								// JavaScript performed when a mouseup event occurs on a circle
+        $circle['onrightclick'] = '';							// JavaScript performed when a right-click occurs on a circle
+        $circle['zIndex'] = '';									// The zIndex of the circle. If two circles overlap, the circle with the higher zIndex will appear on top
 
         $circle_output = '';
 
         foreach ($params as $key => $value) {
+
             if (isset($circle[$key])) {
+
                 $circle[$key] = $value;
+
             }
+
         }
 
-        if ($circle['radius'] > 0 && $circle['center'] != "") {
+        if ($circle['radius']>0 && $circle['center']!="") {
+
             $lat_long_to_push = '';
             if ($this->is_lat_long($circle['center'])) {
                 $lat_long_to_push = $circle['center'];
                 $circle_output = '
 				var circleCenter = new google.maps.LatLng('.$circle['center'].')
 				';
-            } else {
+            }else{
                 $lat_long = $this->get_lat_long_from_address($circle['center']);
                 $circle_output = '
 				var circleCenter = new google.maps.LatLng('.$lat_long[0].', '.$lat_long[1].')';
@@ -770,7 +791,7 @@ class Phpgmaps
                 $circle_output .= ',
 					clickable: false';
             }
-            if ($circle['zIndex'] != "" && is_numeric($circle['zIndex'])) {
+            if ($circle['zIndex']!="" && is_numeric($circle['zIndex'])) {
                 $circle_output .= ',
 					zIndex: '.$circle['zIndex'];
             }
@@ -779,56 +800,56 @@ class Phpgmaps
 				var circle_'.count($this->circles).' = new google.maps.Circle(circleOptions);
 			';
 
-            if ($circle['onclick'] != "") {
+            if ($circle['onclick']!="") {
                 $circle_output .= '
 				google.maps.event.addListener(circle_'.count($this->circles).', "click", function() {
 					'.$circle['onclick'].'
 				});
 				';
             }
-            if ($circle['ondblclick'] != "") {
+            if ($circle['ondblclick']!="") {
                 $circle_output .= '
 				google.maps.event.addListener(circle_'.count($this->circles).', "dblclick", function() {
 					'.$circle['ondblclick'].'
 				});
 				';
             }
-            if ($circle['onmousedown'] != "") {
+            if ($circle['onmousedown']!="") {
                 $circle_output .= '
 				google.maps.event.addListener(circle_'.count($this->circles).', "mousedown", function() {
 					'.$circle['onmousedown'].'
 				});
 				';
             }
-            if ($circle['onmousemove'] != "") {
+            if ($circle['onmousemove']!="") {
                 $circle_output .= '
 				google.maps.event.addListener(circle_'.count($this->circles).', "mousemove", function() {
 					'.$circle['onmousemove'].'
 				});
 				';
             }
-            if ($circle['onmouseout'] != "") {
+            if ($circle['onmouseout']!="") {
                 $circle_output .= '
 				google.maps.event.addListener(circle_'.count($this->circles).', "mouseout", function() {
 					'.$circle['onmouseout'].'
 				});
 				';
             }
-            if ($circle['onmouseover'] != "") {
+            if ($circle['onmouseover']!="") {
                 $circle_output .= '
 				google.maps.event.addListener(circle_'.count($this->circles).', "mouseover", function() {
 					'.$circle['onmouseover'].'
 				});
 				';
             }
-            if ($circle['onmouseup'] != "") {
+            if ($circle['onmouseup']!="") {
                 $circle_output .= '
 				google.maps.event.addListener(circle_'.count($this->circles).', "mouseup", function() {
 					'.$circle['onmouseup'].'
 				});
 				';
             }
-            if ($circle['onrightclick'] != "") {
+            if ($circle['onrightclick']!="") {
                 $circle_output .= '
 				google.maps.event.addListener(circle_'.count($this->circles).', "rightclick", function() {
 					'.$circle['onrightclick'].'
@@ -837,47 +858,55 @@ class Phpgmaps
             }
 
             array_push($this->circles, $circle_output);
+
         }
+
     }
 
     public function add_rectangle($params = array())
     {
+
         $rectangle = array();
 
-        $rectangle['positionSW'] = '';                            // The South-West position (latitude/longitude coordinate OR address) at which the rectangle will appear
-        $rectangle['positionNE'] = '';                            // The North-East position(latitude/longitude coordinate OR address) at which the rectangle will appear
-        $rectangle['clickable'] = true;                            // Defines if the rectangle is clickable
-        $rectangle['strokeColor'] = '0.8';                        // The hex value of the rectangles border color
-        $rectangle['strokeOpacity'] = '0.8';                    // The opacity of the rectangle border
-        $rectangle['strokeWeight'] = '2';                        // The thickness of the rectangle border
-        $rectangle['fillColor'] = '#FF0000';                    // The hex value of the rectangles fill color
-        $rectangle['fillOpacity'] = '0.3';                        // The opacity of the rectangles fill
-        $rectangle['onclick'] = '';                                // JavaScript performed when a rectangle is clicked
-        $rectangle['ondblclick'] = '';                            // JavaScript performed when a rectangle is double-clicked
-        $rectangle['onmousedown'] = '';                            // JavaScript performed when a mousedown event occurs on a rectangle
-        $rectangle['onmousemove'] = '';                            // JavaScript performed when the mouse moves in the area of the rectangle
-        $rectangle['onmouseout'] = '';                            // JavaScript performed when the mouse leaves the area of the rectangle
-        $rectangle['onmouseover'] = '';                            // JavaScript performed when the mouse enters the area of the rectangle
-        $rectangle['onmouseup'] = '';                            // JavaScript performed when a mouseup event occurs on a rectangle
-        $rectangle['onrightclick'] = '';                        // JavaScript performed when a right-click occurs on a rectangle
-        $rectangle['zIndex'] = '';                                // The zIndex of the rectangle. If two rectangles overlap, the rectangle with the higher zIndex will appear on top
+        $rectangle['positionSW'] = '';							// The South-West position (latitude/longitude coordinate OR address) at which the rectangle will appear
+        $rectangle['positionNE'] = '';							// The North-East position(latitude/longitude coordinate OR address) at which the rectangle will appear
+        $rectangle['clickable'] = TRUE;							// Defines if the rectangle is clickable
+        $rectangle['strokeColor'] = '0.8';						// The hex value of the rectangles border color
+        $rectangle['strokeOpacity'] = '0.8';					// The opacity of the rectangle border
+        $rectangle['strokeWeight'] = '2';						// The thickness of the rectangle border
+        $rectangle['fillColor'] = '#FF0000';					// The hex value of the rectangles fill color
+        $rectangle['fillOpacity'] = '0.3';						// The opacity of the rectangles fill
+        $rectangle['onclick'] = '';								// JavaScript performed when a rectangle is clicked
+        $rectangle['ondblclick'] = '';							// JavaScript performed when a rectangle is double-clicked
+        $rectangle['onmousedown'] = '';							// JavaScript performed when a mousedown event occurs on a rectangle
+        $rectangle['onmousemove'] = '';							// JavaScript performed when the mouse moves in the area of the rectangle
+        $rectangle['onmouseout'] = '';							// JavaScript performed when the mouse leaves the area of the rectangle
+        $rectangle['onmouseover'] = '';							// JavaScript performed when the mouse enters the area of the rectangle
+        $rectangle['onmouseup'] = '';							// JavaScript performed when a mouseup event occurs on a rectangle
+        $rectangle['onrightclick'] = '';						// JavaScript performed when a right-click occurs on a rectangle
+        $rectangle['zIndex'] = '';								// The zIndex of the rectangle. If two rectangles overlap, the rectangle with the higher zIndex will appear on top
 
         $rectangle_output = '';
 
         foreach ($params as $key => $value) {
+
             if (isset($rectangle[$key])) {
+
                 $rectangle[$key] = $value;
+
             }
+
         }
 
-        if ($rectangle['positionSW'] != "" && $rectangle['positionNE'] != "") {
+        if ($rectangle['positionSW']!="" && $rectangle['positionNE']!="") {
+
             $lat_long_to_push = '';
             if ($this->is_lat_long($rectangle['positionSW'])) {
                 $lat_long_to_push = $rectangle['positionSW'];
                 $rectangle_output .= '
 				var positionSW = new google.maps.LatLng('.$rectangle['positionSW'].')
 				';
-            } else {
+            }else{
                 $lat_long = $this->get_lat_long_from_address($rectangle['positionSW']);
                 $rectangle_output .= '
 				var positionSW = new google.maps.LatLng('.$lat_long[0].', '.$lat_long[1].')';
@@ -893,7 +922,7 @@ class Phpgmaps
                 $rectangle_output .= '
 				var positionNE = new google.maps.LatLng('.$rectangle['positionNE'].')
 				';
-            } else {
+            }else{
                 $lat_long = $this->get_lat_long_from_address($rectangle['positionNE']);
                 $rectangle_output .= '
 				var positionNE = new google.maps.LatLng('.$lat_long[0].', '.$lat_long[1].')';
@@ -916,7 +945,7 @@ class Phpgmaps
                 $rectangle_output .= ',
 					clickable: false';
             }
-            if ($rectangle['zIndex'] != "" && is_numeric($rectangle['zIndex'])) {
+            if ($rectangle['zIndex']!="" && is_numeric($rectangle['zIndex'])) {
                 $rectangle_output .= ',
 					zIndex: '.$rectangle['zIndex'];
             }
@@ -927,56 +956,56 @@ class Phpgmaps
 				var rectangle_'.count($this->rectangles).' = new google.maps.Rectangle(rectangleOptions);
 			';
 
-            if ($rectangle['onclick'] != "") {
+            if ($rectangle['onclick']!="") {
                 $rectangle_output .= '
 				google.maps.event.addListener(rectangle_'.count($this->rectangles).', "click", function() {
 					'.$rectangle['onclick'].'
 				});
 				';
             }
-            if ($rectangle['ondblclick'] != "") {
+            if ($rectangle['ondblclick']!="") {
                 $rectangle_output .= '
 				google.maps.event.addListener(rectangle_'.count($this->rectangles).', "dblclick", function() {
 					'.$rectangle['ondblclick'].'
 				});
 				';
             }
-            if ($rectangle['onmousedown'] != "") {
+            if ($rectangle['onmousedown']!="") {
                 $rectangle_output .= '
 				google.maps.event.addListener(rectangle_'.count($this->rectangles).', "mousedown", function() {
 					'.$rectangle['onmousedown'].'
 				});
 				';
             }
-            if ($rectangle['onmousemove'] != "") {
+            if ($rectangle['onmousemove']!="") {
                 $rectangle_output .= '
 				google.maps.event.addListener(rectangle_'.count($this->rectangles).', "mousemove", function() {
 					'.$rectangle['onmousemove'].'
 				});
 				';
             }
-            if ($rectangle['onmouseout'] != "") {
+            if ($rectangle['onmouseout']!="") {
                 $rectangle_output .= '
 				google.maps.event.addListener(rectangle_'.count($this->rectangles).', "mouseout", function() {
 					'.$rectangle['onmouseout'].'
 				});
 				';
             }
-            if ($rectangle['onmouseover'] != "") {
+            if ($rectangle['onmouseover']!="") {
                 $rectangle_output .= '
 				google.maps.event.addListener(rectangle_'.count($this->rectangles).', "mouseover", function() {
 					'.$rectangle['onmouseover'].'
 				});
 				';
             }
-            if ($rectangle['onmouseup'] != "") {
+            if ($rectangle['onmouseup']!="") {
                 $rectangle_output .= '
 				google.maps.event.addListener(rectangle_'.count($this->rectangles).', "mouseup", function() {
 					'.$rectangle['onmouseup'].'
 				});
 				';
             }
-            if ($rectangle['onrightclick'] != "") {
+            if ($rectangle['onrightclick']!="") {
                 $rectangle_output .= '
 				google.maps.event.addListener(rectangle_'.count($this->rectangles).', "rightclick", function() {
 					'.$rectangle['onrightclick'].'
@@ -985,35 +1014,43 @@ class Phpgmaps
             }
 
             array_push($this->rectangles, $rectangle_output);
+
         }
+
     }
 
     public function add_ground_overlay($params = array())
     {
+
         $overlay = array();
 
-        $overlay['image'] = '';                                    // JavaScript performed when a ground overlay is clicked
-        $overlay['positionSW'] = '';                            // The South-West position (latitude/longitude coordinate OR addresse) at which the ground overlay will appear
-        $overlay['positionNE'] = '';                            // The North-East position (latitude/longitude coordinate OR addresse) at which the ground overlay will appear
-        $overlay['clickable'] = true;                            // Defines if the ground overlay is clickable
-        $overlay['onclick'] = '';                                // JavaScript performed when a ground overlay is clicked
+        $overlay['image'] = '';									// JavaScript performed when a ground overlay is clicked
+        $overlay['positionSW'] = '';							// The South-West position (latitude/longitude coordinate OR addresse) at which the ground overlay will appear
+        $overlay['positionNE'] = '';							// The North-East position (latitude/longitude coordinate OR addresse) at which the ground overlay will appear
+        $overlay['clickable'] = TRUE;							// Defines if the ground overlay is clickable
+        $overlay['onclick'] = '';								// JavaScript performed when a ground overlay is clicked
 
         $overlay_output = '';
 
         foreach ($params as $key => $value) {
+
             if (isset($overlay[$key])) {
+
                 $overlay[$key] = $value;
+
             }
+
         }
 
-        if ($overlay['image'] != "" && $overlay['positionSW'] != "" && $overlay['positionNE'] != "") {
+        if ($overlay['image']!="" && $overlay['positionSW']!="" && $overlay['positionNE']!="") {
+
             $lat_long_to_push = '';
             if ($this->is_lat_long($overlay['positionSW'])) {
                 $lat_long_to_push = $overlay['positionSW'];
                 $overlay_output .= '
 				var positionSW = new google.maps.LatLng('.$overlay['positionSW'].')
 				';
-            } else {
+            }else{
                 $lat_long = $this->get_lat_long_from_address($overlay['positionSW']);
                 $overlay_output .= '
 				var positionSW = new google.maps.LatLng('.$lat_long[0].', '.$lat_long[1].')';
@@ -1029,7 +1066,7 @@ class Phpgmaps
                 $overlay_output .= '
 				var positionNE = new google.maps.LatLng('.$overlay['positionNE'].')
 				';
-            } else {
+            }else{
                 $lat_long = $this->get_lat_long_from_address($overlay['positionNE']);
                 $overlay_output .= '
 				var positionNE = new google.maps.LatLng('.$lat_long[0].', '.$lat_long[1].')';
@@ -1041,13 +1078,11 @@ class Phpgmaps
 
             $overlay_output .= '
 				var overlay_'.count($this->overlays).' = new google.maps.GroundOverlay("'.$overlay['image'].'", new google.maps.LatLngBounds(positionSW, positionNE), { map: '.$this->map_name;
-            if (!$overlay['clickable']) {
-                $overlay_output .= ', clickable: false';
-            }
+            if (!$overlay['clickable']) { $overlay_output .= ', clickable: false'; }
             $overlay_output .= '});
 			';
 
-            if ($overlay['onclick'] != "") {
+            if ($overlay['onclick']!="") {
                 $overlay_output .= '
 				google.maps.event.addListener(overlay_'.count($this->overlays).', "click", function() {
 					'.$overlay['onclick'].'
@@ -1056,7 +1091,9 @@ class Phpgmaps
             }
 
             array_push($this->overlays, $overlay_output);
+
         }
+
     }
 
     public function create_map()
@@ -1065,58 +1102,39 @@ class Phpgmaps
         $this->output_js_contents = '';
         $this->output_html = '';
 
-        if ($this->maps_loaded == 0) {
-            if ($this->apiKey != "") {
-                if ($this->https) {
-                    $apiLocation = 'https';
-                } else {
-                    $apiLocation = 'http';
-                }
+        if ($this->maps_loaded == 0)
+        {
+            if ($this->apiKey!="")
+            {
+                if ($this->https) { $apiLocation = 'https'; }else{ $apiLocation = 'http'; }
                 $apiLocation .= '://maps.googleapis.com/maps/api/js?key='.$this->apiKey.'&';
-            } else {
-                if ($this->https) {
-                    $apiLocation = 'https://maps-api-ssl';
-                } else {
-                    $apiLocation = 'http://maps';
-                }
+            }
+            else
+            {
+                if ($this->https) { $apiLocation = 'https://maps-api-ssl'; }else{ $apiLocation = 'http://maps'; }
                 $apiLocation .= '.google.com/maps/api/js?';
             }
             $apiLocation .= 'sensor='.$this->sensor;
-            if ($this->region != "" && strlen($this->region) == 2) {
-                $apiLocation .= '&region='.strtoupper($this->region);
-            }
-            if ($this->language != "") {
-                $apiLocation .= '&language='.$this->language;
-            }
+            if ($this->region!="" && strlen($this->region)==2) { $apiLocation .= '&region='.strtoupper($this->region); }
+            if ($this->language!="") { $apiLocation .= '&language='.$this->language; }
             $libraries = array();
-            if ($this->adsense != "") {
-                array_push($libraries, 'adsense');
-            }
-            if ($this->places != "") {
-                array_push($libraries, 'places');
-            }
-            if ($this->panoramio) {
-                array_push($libraries, 'panoramio');
-            }
-            if ($this->drawing) {
-                array_push($libraries, 'drawing');
-            }
-            if (count($libraries)) {
-                $apiLocation .= '&libraries='.implode(",", $libraries);
-            }
+            if ($this->adsense!="") { array_push($libraries, 'adsense'); }
+            if ($this->places!="") { array_push($libraries, 'places'); }
+            if ($this->panoramio) { array_push($libraries, 'panoramio'); }
+            if ($this->drawing) { array_push($libraries, 'drawing'); }
+            if (count($libraries)) { $apiLocation .= '&libraries='.implode(",", $libraries); }
 
-            if (!$this->loadAsynchronously) {
+            if (!$this->loadAsynchronously)
+            {
                 $this->output_js .= '
 				<script type="text/javascript" src="'.$apiLocation.'"></script>';
             }
 
-            if ($this->cluster) {
-                $this->output_js .= '
-			<script type="text/javascript" src="'.(($this->https) ? 'https' : 'http').'://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js"></script>
-			';
-            }
+            if ($this->cluster) { $this->output_js .= '
+			<script type="text/javascript" src="' . ( ($this->https) ? 'https' : 'http' ) . '://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js"></script>
+			'; }
         }
-        if ($this->jsfile == "") {
+        if ($this->jsfile=="") {
             $this->output_js .= '
 			<script type="text/javascript">
 			//<![CDATA[
@@ -1148,7 +1166,8 @@ class Phpgmaps
         if ($this->places) {
             $this->output_js_contents .= 'var placesService;
 			';
-            if ($this->placesAutocompleteInputID != "") {
+            if ($this->placesAutocompleteInputID != "")
+            {
                 $this->output_js_contents .= 'var placesAutocomplete;
 			';
             }
@@ -1164,7 +1183,8 @@ class Phpgmaps
 
         $this->output_js_contents .= '
 			iw_'.$this->map_name.' = new google.maps.InfoWindow(';
-        if ($this->infowindowMaxWidth != 0) {
+        if ($this->infowindowMaxWidth != 0)
+        {
             $this->output_js_contents .= '{
 				maxWidth: '.$this->infowindowMaxWidth.'
 			}';
@@ -1187,7 +1207,7 @@ class Phpgmaps
                 if ($this->stylesAsMapTypes) {
                     $this->output_js_contents .= 'var styles_'.$styles.' = new google.maps.StyledMapType(styles_'.$styles.', {name:"'.$style['name'].'"});
 				';
-                } else {
+                }else{
                     $styleOutput .= $this->map_name.'.setOptions({styles: styles_'.$styles.'});
 				';
                     break;
@@ -1197,10 +1217,10 @@ class Phpgmaps
             }
         }
 
-        if ($this->center != "auto") {
+        if ($this->center!="auto") {
             if ($this->is_lat_long($this->center)) { // if centering the map on a lat/long
                 $this->output_js_contents .= 'var myLatlng = new google.maps.LatLng('.$this->center.');';
-            } else {  // if centering the map on an address
+            }else{  // if centering the map on an address
                 $lat_long = $this->get_lat_long_from_address($this->center);
                 $this->output_js_contents .= 'var myLatlng = new google.maps.LatLng('.$lat_long[0].', '.$lat_long[1].');';
             }
@@ -1209,20 +1229,10 @@ class Phpgmaps
         $this->output_js_contents .= '
 				var myOptions = {
 			  		';
-        if ($this->zoom == "auto") {
-            $this->output_js_contents .= 'zoom: 13,';
-        } else {
-            $this->output_js_contents .= 'zoom: '.$this->zoom.',';
-        }
-        if ($this->center != "auto") {
-            $this->output_js_contents .= '
-					center: myLatlng,';
-        }
-        if (strtolower($this->map_type) == "street") {
-            $map_type = "ROADMAP";
-        } else {
-            $map_type = $this->map_type;
-        }
+        if ($this->zoom=="auto") { $this->output_js_contents .= 'zoom: 13,'; }else{ $this->output_js_contents .= 'zoom: '.$this->zoom.','; }
+        if ($this->center!="auto") { $this->output_js_contents .= '
+					center: myLatlng,'; }
+        if (strtolower($this->map_type)=="street") { $map_type = "ROADMAP"; }else{ $map_type = $this->map_type; }
         $this->output_js_contents .= '
 			  		mapTypeId: google.maps.MapTypeId.'.$map_type;
         if ($this->backgroundColor) {
@@ -1257,11 +1267,11 @@ class Phpgmaps
             $this->output_js_contents .= ',
 					draggable: false';
         }
-        if ($this->draggableCursor != "") {
+        if ($this->draggableCursor!="") {
             $this->output_js_contents .= ',
 					draggableCursor: "'.$this->draggableCursor.'"';
         }
-        if ($this->draggingCursor != "") {
+        if ($this->draggingCursor!="") {
             $this->output_js_contents .= ',
 					draggingCursor: "'.$this->draggingCursor.'"';
         }
@@ -1271,16 +1281,14 @@ class Phpgmaps
         }
         $mapTypeControlOptions = array();
         $map_types = array();
-        if ($this->mapTypeControlPosition != "") {
+        if ($this->mapTypeControlPosition!="") {
             array_push($mapTypeControlOptions, 'position: google.maps.ControlPosition.'.strtoupper($this->mapTypeControlPosition));
         }
-        if ($this->mapTypeControlStyle != "" && (strtoupper($this->mapTypeControlStyle) == "DROPDOWN_MENU" || strtoupper($this->mapTypeControlStyle) == "HORIZONTAL_BAR")) {
+        if ($this->mapTypeControlStyle!="" && (strtoupper($this->mapTypeControlStyle)=="DROPDOWN_MENU" || strtoupper($this->mapTypeControlStyle)=="HORIZONTAL_BAR")) {
             array_push($mapTypeControlOptions, 'style: google.maps.MapTypeControlStyle.'.strtoupper($this->mapTypeControlStyle));
         }
         if (count($this->map_types_available)) {
-            foreach ($this->map_types_available as $map_type) {
-                array_push($map_types, 'google.maps.MapTypeId.'.strtoupper($map_type));
-            }
+            foreach ($this->map_types_available as $map_type) { array_push($map_types, 'google.maps.MapTypeId.'.strtoupper($map_type)); }
         }
         if (count($this->styles) && $this->stylesAsMapTypes) {
             $styles = 0;
@@ -1289,7 +1297,7 @@ class Phpgmaps
                 $styleOutput .= '
 					  '.$this->map_name.'.mapTypes.set("style'.$styles.'", styles_'.$styles.');
 				';
-                if ($this->stylesAsMapTypesDefault == $style['name']) {
+                if ($this->stylesAsMapTypesDefault==$style['name']) {
                     $styleOutput .= '
 					  '.$this->map_name.'.setMapTypeId("style'.$styles.'");
 				';
@@ -1304,11 +1312,11 @@ class Phpgmaps
             $this->output_js_contents .= ',
 					mapTypeControlOptions: {'.implode(",", $mapTypeControlOptions).'}';
         }
-        if ($this->minzoom != "") {
+        if ($this->minzoom!="") {
             $this->output_js_contents .= ',
 					minZoom: '.$this->minzoom;
         }
-        if ($this->maxzoom != "") {
+        if ($this->maxzoom!="") {
             $this->output_js_contents .= ',
 					maxZoom: '.$this->maxzoom;
         }
@@ -1316,11 +1324,11 @@ class Phpgmaps
             $this->output_js_contents .= ',
 					noClear: true';
         }
-        if ($this->navigationControlPosition != "") {
+        if ($this->navigationControlPosition!="") {
             $this->output_js_contents .= ',
 					navigationControlOptions: {position: google.maps.ControlPosition.'.strtoupper($this->navigationControlPosition).'}';
         }
-        if ($this->scaleControlPosition != "") {
+        if ($this->scaleControlPosition!="") {
             $this->output_js_contents .= ',
 			         scaleControl: true,
 					scaleControlOptions: {position: google.maps.ControlPosition.'.strtoupper($this->scaleControlPosition).'}';
@@ -1329,21 +1337,17 @@ class Phpgmaps
             $this->output_js_contents .= ',
 					scrollwheel: false';
         }
-        if ($this->streetViewControlPosition != "") {
+        if ($this->streetViewControlPosition!="") {
             $this->output_js_contents .= ',
 					streetViewControlOptions: {position: google.maps.ControlPosition.'.strtoupper($this->streetViewControlPosition).'}';
         }
-        if ($this->tilt == 45) {
+        if ($this->tilt==45) {
             $this->output_js_contents .= ',
 					tilt: '.$this->tilt;
         }
         $zoomControlOptions = array();
-        if ($this->zoomControlPosition != "") {
-            array_push($zoomControlOptions, 'position: google.maps.ControlPosition.'.strtoupper($this->zoomControlPosition));
-        }
-        if ($this->zoomControlStyle != "" && (strtoupper($this->zoomControlStyle) == "SMALL" || strtoupper($this->zoomControlStyle) == "LARGE")) {
-            array_push($zoomControlOptions, 'style: google.maps.ZoomControlStyle.'.strtoupper($this->zoomControlStyle));
-        }
+        if ($this->zoomControlPosition!="") { array_push($zoomControlOptions, 'position: google.maps.ControlPosition.'.strtoupper($this->zoomControlPosition)); }
+        if ($this->zoomControlStyle!="" && (strtoupper($this->zoomControlStyle)=="SMALL" || strtoupper($this->zoomControlStyle)=="LARGE")) { array_push($zoomControlOptions, 'style: google.maps.ZoomControlStyle.'.strtoupper($this->zoomControlStyle)); }
         if (count($zoomControlOptions)) {
             $this->output_js_contents .= ',
 					zoomControlOptions: {'.implode(",", $zoomControlOptions).'}';
@@ -1352,7 +1356,7 @@ class Phpgmaps
 				'.$this->map_name.' = new google.maps.Map(document.getElementById("'.$this->map_div_id.'"), myOptions);
 				';
 
-        if ($styleOutput != "") {
+        if ($styleOutput!="") {
             $this->output_js_contents .= $styleOutput.'
 				';
         }
@@ -1368,14 +1372,18 @@ class Phpgmaps
 				';
         }
 
-        if ((is_array($this->kmlLayerURL) && count($this->kmlLayerURL)) || (!is_array($this->kmlLayerURL) && $this->kmlLayerURL != "")) {
-            if (!is_array($this->kmlLayerURL)) {
+        if ((is_array($this->kmlLayerURL) && count($this->kmlLayerURL)) || (!is_array($this->kmlLayerURL) && $this->kmlLayerURL != ""))
+        {
+            if (!is_array($this->kmlLayerURL))
+            {
                 // Need to convert single KML layer to array
                 $this->kmlLayerURL = array($this->kmlLayerURL);
             }
-            if (count($this->kmlLayerURL)) {
+            if (count($this->kmlLayerURL))
+            {
                 $i = 0;
-                foreach ($this->kmlLayerURL as $kmlLayerURL) {
+                foreach ($this->kmlLayerURL as $kmlLayerURL)
+                {
                     $this->output_js_contents .= '
 						var kmlLayerOptions = {
 							map: '.$this->map_name;
@@ -1395,20 +1403,16 @@ class Phpgmaps
         if ($this->panoramio) {
             $this->output_js_contents .= 'var panoramioLayer = new google.maps.panoramio.PanoramioLayer();
 				';
-            if ($this->panoramioTag != "") {
-                $this->output_js_contents .= 'panoramioLayer.setTag("'.$this->panoramioTag.'");
-				';
-            }
-            if ($this->panoramioUser != "") {
-                $this->output_js_contents .= 'panoramioLayer.setUserId("'.$this->panoramioUser.'");
-				';
-            }
+            if ($this->panoramioTag!="") { $this->output_js_contents .= 'panoramioLayer.setTag("'.$this->panoramioTag.'");
+				'; }
+            if ($this->panoramioUser!="") { $this->output_js_contents .= 'panoramioLayer.setUserId("'.$this->panoramioUser.'");
+				'; }
             $this->output_js_contents .= '
 				panoramioLayer.setMap('.$this->map_name.');
 				';
         }
 
-        if (strtolower($this->map_type) == "street") { // if defaulting the map to Street View
+        if (strtolower($this->map_type)=="street") { // if defaulting the map to Street View
             $this->output_js_contents .= '
 			  	var streetViewOptions = {
 			    	position: myLatlng';
@@ -1416,7 +1420,7 @@ class Phpgmaps
                 $this->output_js_contents .= ',
 					addressControl: false';
             }
-            if ($this->streetViewAddressPosition != "") {
+            if ($this->streetViewAddressPosition!="") {
                 $this->output_js_contents .= ',
 					addressControlOptions: { position: google.maps.ControlPosition.'.$this->streetViewAddressPosition.' }';
             }
@@ -1432,11 +1436,11 @@ class Phpgmaps
                 $this->output_js_contents .= ',
 					panControl: false';
             }
-            if ($this->streetViewPanPosition != "") {
+            if ($this->streetViewPanPosition!="") {
                 $this->output_js_contents .= ',
 					panControlOptions: { position: google.maps.ControlPosition.'.$this->streetViewPanPosition.' }';
             }
-            if ($this->streetViewPovHeading != 0 || $this->streetViewPovPitch != 0 || $this->streetViewPovZoom != 0) {
+            if ($this->streetViewPovHeading!=0 || $this->streetViewPovPitch!=0 || $this->streetViewPovZoom!=0) {
                 $this->output_js_contents .= ',
 					pov: {
 						heading: '.$this->streetViewPovHeading.',
@@ -1448,14 +1452,14 @@ class Phpgmaps
                 $this->output_js_contents .= ',
 					zoomControl: false';
             }
-            if ($this->streetViewZoomPosition != "" || $this->streetViewZoomStyle != "") {
+            if ($this->streetViewZoomPosition!="" || $this->streetViewZoomStyle!="") {
                 $this->output_js_contents .= ',
 					zoomControlOptions: {';
-                if ($this->streetViewZoomPosition != "") {
+                if ($this->streetViewZoomPosition!="") {
                     $this->output_js_contents .= '
 						position: google.maps.ControlPosition.'.$this->streetViewZoomPosition.',';
                 }
-                if ($this->streetViewZoomStyle != "") {
+                if ($this->streetViewZoomStyle!="") {
                     $this->output_js_contents .= '
 						style: google.maps.ZoomControlStyle.'.$this->streetViewZoomStyle.',';
                 }
@@ -1469,7 +1473,7 @@ class Phpgmaps
 	      		';
         }
 
-        if ($this->center == "auto") { // if wanting to center on the users location
+        if ($this->center=="auto") { // if wanting to center on the users location
             $this->output_js_contents .= '
 				// Try W3C Geolocation (Preferred)
 				if(navigator.geolocation) {
@@ -1486,11 +1490,11 @@ class Phpgmaps
         if ($this->directions) {
             $this->output_js_contents .= 'directionsDisplay.setMap('.$this->map_name.');
 			';
-            if ($this->directionsDivID != "") {
+            if ($this->directionsDivID!="") {
                 $this->output_js_contents .= 'directionsDisplay.setPanel(document.getElementById("'.$this->directionsDivID.'"));
 			';
             }
-            if ($this->directionsDraggable && $this->directionsChanged != "") {
+            if ($this->directionsDraggable && $this->directionsChanged!="") {
                 $this->output_js_contents .= 'google.maps.event.addListener(directionsDisplay, "directions_changed", function() {
 					'.$this->directionsChanged.'
 				});
@@ -1499,9 +1503,8 @@ class Phpgmaps
         }
 
         if ($this->drawing) {
-            if ($this->drawingControlPosition == '') {
-                $this->drawingControlPosition = 'TOP_CENTER';
-            }
+
+            if ($this->drawingControlPosition=='') { $this->drawingControlPosition = 'TOP_CENTER'; }
 
             $this->output_js_contents .= 'drawingManager = new google.maps.drawing.DrawingManager({
 				drawingMode: google.maps.drawing.OverlayType.'.strtoupper($this->drawingDefaultMode).',
@@ -1512,13 +1515,11 @@ class Phpgmaps
             if (count($this->drawingModes)) {
                 $this->output_js_contents .= ',
 					drawingModes: [';
-                $i = 0;
+                $i=0;
                 foreach ($this->drawingModes as $drawingMode) {
-                    if ($i > 0) {
-                        $this->output_js_contents .= ',';
-                    }
+                    if ($i>0) { $this->output_js_contents .= ','; }
                     $this->output_js_contents .= 'google.maps.drawing.OverlayType.'.strtoupper($drawingMode);
-                    if (strtoupper($drawingMode) != "MARKER") {
+                    if (strtoupper($drawingMode)!="MARKER") {
                         $shapeOptions .= ',
 						'.strtolower($drawingMode).'Options: {
 							editable: true
@@ -1540,7 +1541,7 @@ class Phpgmaps
 				newShape.type = event.type;
 				';
             if (count($this->drawingOnComplete)) {
-                foreach ($this->drawingOnComplete as $shape => $js) {
+                foreach ($this->drawingOnComplete as $shape=>$js) {
                     $this->output_js_contents .= 'if (event.type==google.maps.drawing.OverlayType.'.strtoupper($shape).') {
 						'.$js.'
 					}
@@ -1549,6 +1550,7 @@ class Phpgmaps
             }
 
             if (count($this->drawingOnEdit)) {
+
                 if (isset($this->drawingOnEdit['polygon'])) {
                     $this->output_js_contents .= '
 				if (newShape.type==google.maps.drawing.OverlayType.POLYGON) {
@@ -1606,19 +1608,21 @@ class Phpgmaps
 
             $this->output_js_contents .= '
 			});';
+
         }
 
         if ($this->places) {
+
             $placesLocationSet = false;
 
-            if ($this->placesLocationSW != "" && $this->placesLocationNE != "") { // if search based on bounds
+            if ($this->placesLocationSW!="" && $this->placesLocationNE!="") { // if search based on bounds
 
                 $placesLocationSet = true;
 
                 if ($this->is_lat_long($this->placesLocationSW)) {
                     $this->output_js_contents .= 'var placesLocationSW = new google.maps.LatLng('.$this->placesLocationSW.');
 			';
-                } else {  // if centering the map on an address
+                }else{  // if centering the map on an address
                     $lat_long = $this->get_lat_long_from_address($this->placesLocationSW);
                     $this->output_js_contents .= 'var placesLocationSW = new google.maps.LatLng('.$lat_long[0].', '.$lat_long[1].');
 			';
@@ -1627,25 +1631,27 @@ class Phpgmaps
                 if ($this->is_lat_long($this->placesLocationNE)) {
                     $this->output_js_contents .= 'var placesLocationNE = new google.maps.LatLng('.$this->placesLocationNE.');
 			';
-                } else {  // if centering the map on an address
+                }else{  // if centering the map on an address
                     $lat_long = $this->get_lat_long_from_address($this->placesLocationNE);
                     $this->output_js_contents .= 'var placesLocationNE = new google.maps.LatLng('.$lat_long[0].', '.$lat_long[1].');
 			';
                 }
+
             }
 
-            if (($placesLocationSet || $this->placesLocation != "") || count($this->placesTypes) || $this->placesName != "") {
+            if (($placesLocationSet || $this->placesLocation!="") || count($this->placesTypes) || $this->placesName!="")
+            {
                 $this->output_js_contents .= 'var placesRequest = {
 					';
                 if ($placesLocationSet) {
                     $this->output_js_contents .= 'bounds: new google.maps.LatLngBounds(placesLocationSW, placesLocationNE)
 						';
-                } else {
-                    if ($this->placesLocation != "") { // if search based on a center point
+                }else{
+                    if ($this->placesLocation!="") { // if search based on a center point
                         if ($this->is_lat_long($this->placesLocation)) { // if centering the map on a lat/long
                             $this->output_js_contents .= 'location: new google.maps.LatLng('.$this->placesLocation.')
 						';
-                        } else {  // if centering the map on an address
+                        }else{  // if centering the map on an address
                             $lat_long = $this->get_lat_long_from_address($this->placesLocation);
                             $this->output_js_contents .= 'location: new google.maps.LatLng('.$lat_long[0].', '.$lat_long[1].')
 						';
@@ -1659,7 +1665,7 @@ class Phpgmaps
                     $this->output_js_contents .= ',types: [\''.implode("','", $this->placesTypes).'\']
 						';
                 }
-                if ($this->placesName != "") {
+                if ($this->placesName!="") {
                     $this->output_js_contents .= ',name : \''.$this->placesName.'\'
 						';
                 }
@@ -1670,15 +1676,17 @@ class Phpgmaps
 				';
             }
 
-            if ($this->placesAutocompleteInputID != "") {
+            if ($this->placesAutocompleteInputID != "")
+            {
                 $this->output_js_contents .= 'var autocompleteOptions = {
 					';
                 $autocompleteOptions = '';
-                if ($this->placesAutocompleteBoundSW != "" && $this->placesAutocompleteBoundNE != "") {
+                if ($this->placesAutocompleteBoundSW != "" && $this->placesAutocompleteBoundNE != "")
+                {
                     if ($this->is_lat_long($this->placesAutocompleteBoundSW)) {
                         $autocompleteOptionsSW = 'new google.maps.LatLng('.$this->placesAutocompleteBoundSW.')
 					';
-                    } else {  // if centering the map on an address
+                    }else{  // if centering the map on an address
                         $lat_long = $this->get_lat_long_from_address($this->placesAutocompleteBoundSW);
                         $autocompleteOptionsSW = 'new google.maps.LatLng('.$lat_long[0].', '.$lat_long[1].')
 					';
@@ -1687,15 +1695,17 @@ class Phpgmaps
                     if ($this->is_lat_long($this->placesAutocompleteBoundNE)) {
                         $autocompleteOptionsNE = 'new google.maps.LatLng('.$this->placesAutocompleteBoundNE.')
 					';
-                    } else {  // if centering the map on an address
+                    }else{  // if centering the map on an address
                         $lat_long = $this->get_lat_long_from_address($this->placesAutocompleteBoundNE);
                         $autocompleteOptionsNE = 'new google.maps.LatLng('.$lat_long[0].', '.$lat_long[1].')
 					';
                     }
                     $autocompleteOptions .= 'bounds: new google.maps.LatLngBounds('.$autocompleteOptionsSW.', '.$autocompleteOptionsNE.')';
                 }
-                if (count($this->placesAutocompleteTypes)) {
-                    if ($autocompleteOptions != "") {
+                if (count($this->placesAutocompleteTypes))
+                {
+                    if ($autocompleteOptions != "")
+                    {
                         $autocompleteOptions .= ',
 						 ';
                     }
@@ -1710,105 +1720,108 @@ class Phpgmaps
 				placesAutocomplete = new google.maps.places.Autocomplete(autocompleteInput, autocompleteOptions);
 				';
 
-                if ($this->placesAutocompleteBoundsMap) {
+                if ($this->placesAutocompleteBoundsMap)
+                {
                     $this->output_js_contents .= 'placesAutocomplete.bindTo(\'bounds\', map);
 					';
                 }
 
-                if ($this->placesAutocompleteOnChange != "") {
+                if ($this->placesAutocompleteOnChange != "")
+                {
                     $this->output_js_contents .= 'google.maps.event.addListener(placesAutocomplete, \'place_changed\', function() {
 						'.$this->placesAutocompleteOnChange.'
 					});
 					';
                 }
             }
+
         }
 
-        if ($this->onboundschanged != "") {
+        if ($this->onboundschanged!="") {
             $this->output_js_contents .= 'google.maps.event.addListener('.$this->map_name.', "bounds_changed", function(event) {
     			'.$this->onboundschanged.'
   			});
 			';
         }
-        if ($this->oncenterchanged != "") {
+        if ($this->oncenterchanged!="") {
             $this->output_js_contents .= 'google.maps.event.addListener('.$this->map_name.', "center_changed", function(event) {
     			'.$this->oncenterchanged.'
   			});
 			';
         }
-        if ($this->onclick != "") {
+        if ($this->onclick!="") {
             $this->output_js_contents .= 'google.maps.event.addListener('.$this->map_name.', "click", function(event) {
     			'.$this->onclick.'
   			});
 			';
         }
-        if ($this->ondblclick != "") {
+        if ($this->ondblclick!="") {
             $this->output_js_contents .= 'google.maps.event.addListener('.$this->map_name.', "dblclick", function(event) {
     			'.$this->ondblclick.'
   			});
 			';
         }
-        if ($this->ondrag != "") {
+        if ($this->ondrag!="") {
             $this->output_js_contents .= 'google.maps.event.addListener('.$this->map_name.', "drag", function(event) {
     			'.$this->ondrag.'
   			});
 			';
         }
-        if ($this->ondragend != "") {
+        if ($this->ondragend!="") {
             $this->output_js_contents .= 'google.maps.event.addListener('.$this->map_name.', "dragend", function(event) {
     			'.$this->ondragend.'
   			});
 			';
         }
-        if ($this->ondragstart != "") {
+        if ($this->ondragstart!="") {
             $this->output_js_contents .= 'google.maps.event.addListener('.$this->map_name.', "dragstart", function(event) {
     			'.$this->ondragstart.'
   			});
 			';
         }
-        if ($this->onidle != "") {
+        if ($this->onidle!="") {
             $this->output_js_contents .= 'google.maps.event.addListener('.$this->map_name.', "idle", function(event) {
     			'.$this->onidle.'
   			});
 			';
         }
-        if ($this->onmousemove != "") {
+        if ($this->onmousemove!="") {
             $this->output_js_contents .= 'google.maps.event.addListener('.$this->map_name.', "mousemove", function(event) {
     			'.$this->onmousemove.'
   			});
 			';
         }
-        if ($this->onmouseout != "") {
+        if ($this->onmouseout!="") {
             $this->output_js_contents .= 'google.maps.event.addListener('.$this->map_name.', "mouseout", function(event) {
     			'.$this->onmouseout.'
   			});
 			';
         }
-        if ($this->onmouseover != "") {
+        if ($this->onmouseover!="") {
             $this->output_js_contents .= 'google.maps.event.addListener('.$this->map_name.', "mouseover", function(event) {
     			'.$this->onmouseover.'
   			});
 			';
         }
-        if ($this->onresize != "") {
+        if ($this->onresize!="") {
             $this->output_js_contents .= 'google.maps.event.addListener('.$this->map_name.', "resize", function(event) {
     			'.$this->onresize.'
   			});
 			';
         }
-        if ($this->onrightclick != "") {
+        if ($this->onrightclick!="") {
             $this->output_js_contents .= 'google.maps.event.addListener('.$this->map_name.', "rightclick", function(event) {
     			'.$this->onrightclick.'
   			});
 			';
         }
-        if ($this->ontilesloaded != "") {
+        if ($this->ontilesloaded!="") {
             $this->output_js_contents .= 'google.maps.event.addListener('.$this->map_name.', "tilesloaded", function(event) {
     			'.$this->ontilesloaded.'
   			});
 			';
         }
-        if ($this->onzoomchanged != "") {
+        if ($this->onzoomchanged!="") {
             $this->output_js_contents .= 'google.maps.event.addListener('.$this->map_name.', "zoom_changed", function(event) {
     			'.$this->onzoomchanged.'
   			});
@@ -1827,18 +1840,12 @@ class Phpgmaps
             $this->output_js_contents .= '
 			var clusterOptions = {
 				gridSize: '.$this->clusterGridSize;
-            if ($this->clusterMaxZoom != "") {
-                $this->output_js_contents .= ',
-				maxZoom: '.$this->clusterMaxZoom;
-            }
-            if (!$this->clusterZoomOnClick) {
-                $this->output_js_contents .= ',
-				zoomOnClick: false';
-            }
-            if ($this->clusterAverageCenter) {
-                $this->output_js_contents .= ',
-				averageCenter: true';
-            }
+            if ($this->clusterMaxZoom!="") { $this->output_js_contents .= ',
+				maxZoom: '.$this->clusterMaxZoom; }
+            if (!$this->clusterZoomOnClick) { $this->output_js_contents .= ',
+				zoomOnClick: false'; }
+            if ($this->clusterAverageCenter) { $this->output_js_contents .= ',
+				averageCenter: true'; }
             $this->output_js_contents .= ',
 				minimumClusterSize: '.$this->clusterMinimumClusterSize.'
 			};
@@ -1886,10 +1893,12 @@ class Phpgmaps
         }
         //
 
-        if ($this->zoom == "auto") {
+        if ($this->zoom=="auto") {
+
             $this->output_js_contents .= '
 			fitMapToBounds_'.$this->map_name.'();
 			';
+
         }
 
         if ($this->adsense) {
@@ -1903,10 +1912,8 @@ class Phpgmaps
 		    	position: google.maps.ControlPosition.'.$this->adsensePosition.',
 		    	publisherId: "'.$this->adsensePublisherID.'",
 		    	';
-            if ($this->adsenseChannelNumber != "") {
-                $this->output_js_contents .= 'channelNumber: "'.$this->adsenseChannelNumber.'",
-		    	';
-            }
+            if ($this->adsenseChannelNumber!="") { $this->output_js_contents .= 'channelNumber: "'.$this->adsenseChannelNumber.'",
+		    	'; }
             $this->output_js_contents .= 'map: '.$this->map_name.',
 		    	visible: true
 		    };
@@ -1914,8 +1921,8 @@ class Phpgmaps
 		    ';
         }
 
-        if ($this->directions && $this->directionsStart != "" && $this->directionsEnd != "") {
-            if ($this->directionsStart == "auto" && $this->directionsEnd == "auto") {
+        if ($this->directions && $this->directionsStart!="" && $this->directionsEnd!="") {
+            if ($this->directionsStart=="auto" && $this->directionsEnd=="auto") {
                 // Both start and finish are at the users current location
                 $this->output_js_contents .= '
 				// Try W3C Geolocation (Preferred)
@@ -1929,7 +1936,7 @@ class Phpgmaps
 					alert(\'Your browser does not support geolocation.\');
 				}
 				';
-            } elseif ($this->directionsStart == "auto") {
+            }else if ($this->directionsStart=="auto") {
                 // The start point should be at the users current location
                 $this->output_js_contents .= '
 				// Try W3C Geolocation (Preferred)
@@ -1943,7 +1950,7 @@ class Phpgmaps
 					alert(\'Your browser does not support geolocation.\');
 				}
 				';
-            } elseif ($this->directionsEnd == "auto") {
+            }else if ($this->directionsEnd=="auto") {
                 // The end point should be at the users current location
                 $this->output_js_contents .= '
 				// Try W3C Geolocation (Preferred)
@@ -1957,7 +1964,7 @@ class Phpgmaps
 					alert(\'Your browser does not support geolocation.\');
 				}
 				';
-            } else {
+            }else{
                 // The start and end point are at pre-defined locations
                 $this->output_js_contents .= '
 				calcRoute(\''.$this->directionsStart.'\', \''.$this->directionsEnd.'\');
@@ -1965,7 +1972,7 @@ class Phpgmaps
             }
         }
 
-        if ($this->onload != "") {
+        if ($this->onload!="") {
             $this->output_js_contents .= '
 				'.$this->onload;
         }
@@ -1988,6 +1995,7 @@ class Phpgmaps
         //
 
         if ($this->directions) {
+
             $this->output_js_contents .= 'function calcRoute(start, end) {
 
 			var request = {
@@ -1997,24 +2005,25 @@ class Phpgmaps
 			    	';
 
             if (count($this->directionsWaypointArray)) {
+
                 $directionsWaypointStr = '';
                 foreach ($this->directionsWaypointArray as $waypoint) {
-                    if ($directionsWaypointStr != '') {
-                        $directionsWaypointStr .= ',';
-                    }
-                    $directionsWaypointStr .= '{ location: "'.$waypoint.'", stopover: true}';
+                    if ($directionsWaypointStr != '') { $directionsWaypointStr .= ','; }
+                    $directionsWaypointStr .= '{ location: "' . $waypoint . '", stopover: true}';
                 }
-                $this->output_js_contents .= ', waypoints: ['.$directionsWaypointStr.']';
+                $this->output_js_contents .= ', waypoints: [' . $directionsWaypointStr . ']';
 
-                if ($this->directionsWaypointsOptimize) {
-                    $this->output_js_contents .= ', optimizeWaypoints: true';
+                if ($this->directionsWaypointsOptimize)
+                {
+                    $this->output_js_contents .= ', optimizeWaypoints: true'
+                    ;
                 }
             }
-            if ($this->region != "" && strlen($this->region) == 2) {
+            if ($this->region!="" && strlen($this->region)==2) {
                 $this->output_js_contents .= ',region: '.strtoupper($this->region).'
 					';
             }
-            if (trim($this->directionsUnits) != "" && (strtolower(trim($this->directionsUnits)) == "metric" || strtolower(trim($this->directionsUnits)) == "imperial")) {
+            if (trim($this->directionsUnits)!="" && (strtolower(trim($this->directionsUnits)) == "metric" || strtolower(trim($this->directionsUnits)) == "imperial")) {
                 $this->output_js_contents .= ',unitSystem: google.maps.UnitSystem.'.strtoupper(trim($this->directionsUnits)).'
 					';
             }
@@ -2046,6 +2055,7 @@ class Phpgmaps
 			  	});
 			}
 			';
+
         }
 
         if ($this->places) {
@@ -2072,16 +2082,14 @@ class Phpgmaps
 
 					}
 					';
-            if ($this->zoom == "auto") {
-                $this->output_js_contents .= 'fitMapToBounds_'.$this->map_name.'();';
-            }
+            if ($this->zoom=="auto") { $this->output_js_contents .= 'fitMapToBounds_'.$this->map_name.'();'; }
             $this->output_js_contents .= '
 				}
 			}
 			';
         }
 
-        if ($this->zoom == "auto") {
+        if ($this->zoom=="auto") {
             $this->output_js_contents .= '
 			function fitMapToBounds_'.$this->map_name.'() {
 				var bounds = new google.maps.LatLngBounds();
@@ -2105,7 +2113,7 @@ class Phpgmaps
 			}
 			window.onload = loadScript_'.$this->map_name.';
 			';
-        } else {
+        }else{
             $this->output_js_contents .= '
 			google.maps.event.addDomListener(window, "load", initialize_'.$this->map_name.');
 			';
@@ -2117,22 +2125,22 @@ class Phpgmaps
             $this->output_js_contents = $CI->jsmin->min($this->output_js_contents);
         }
 
-        if ($this->jsfile == "") {
+        if ($this->jsfile=="") {
             $this->output_js .= $this->output_js_contents;
-        } else { // if needs writing to external js file
+        }else{ // if needs writing to external js file
             if (!$handle = fopen($this->jsfile, "w")) {
                 $this->output_js .= $this->output_js_contents;
-            } else {
+            }else{
                 if (!fwrite($handle, $this->output_js_contents)) {
                     $this->output_js .= $this->output_js_contents;
-                } else {
+                }else{
                     $this->output_js .= '
 					<script src="'.$this->jsfile.'" type="text/javascript"></script>';
                 }
             }
         }
 
-        if ($this->jsfile == "") {
+        if ($this->jsfile=="") {
             $this->output_js .= '
 			//]]>
 			</script>';
@@ -2151,26 +2159,32 @@ class Phpgmaps
 
         ++$this->maps_loaded;
 
-        return array('js' => $this->output_js, 'html' => $this->output_html, 'markers' => $this->markersInfo);
+        return array('js'=>$this->output_js, 'html'=>$this->output_html, 'markers'=>$this->markersInfo);
+
     }
 
     public function is_lat_long($input)
     {
+
         $input = str_replace(", ", ",", trim($input));
         $input = explode(",", $input);
-        if (count($input) == 2) {
+        if (count($input)==2) {
+
             if (is_numeric($input[0]) && is_numeric($input[1])) { // is a lat long
                 return true;
-            } else { // not a lat long - incorrect values
+            }else{ // not a lat long - incorrect values
                 return false;
             }
-        } else { // not a lat long - too many parts
+
+        }else{ // not a lat long - too many parts
             return false;
         }
+
     }
 
     public function get_lat_long_from_address($address, $attempts = 0)
     {
+
         $lat = 0;
         $lng = 0;
 
@@ -2178,51 +2192,51 @@ class Phpgmaps
 
         if ($this->geocodeCaching) { // if caching of geocode requests is activated
 
-            $CI = & get_instance();
+            $CI =& get_instance();
             $CI->load->database();
             $CI->db->select("latitude,longitude");
             $CI->db->from("geocoding");
             $CI->db->where("address", trim(strtolower($address)));
             $query = $CI->db->get();
 
-            if ($query->num_rows() > 0) {
+            if ($query->num_rows()>0) {
                 $row = $query->row();
-
                 return array($row->latitude, $row->longitude);
             }
+
         }
 
-        if ($this->https) {
-            $data_location = 'https://';
-        } else {
-            $data_location = 'http://';
-        }
+        if ($this->https) { $data_location = 'https://'; }else{ $data_location = 'http://'; }
         $data_location .= "maps.google.com/maps/api/geocode/json?address=".urlencode(utf8_encode($address))."&sensor=".$this->sensor;
-        if ($this->region != "" && strlen($this->region) == 2) {
-            $data_location .= "&region=".$this->region;
-        }
+        if ($this->region!="" && strlen($this->region)==2) { $data_location .= "&region=".$this->region; }
         $data = file_get_contents($data_location);
 
         $data = json_decode($data);
 
-        if ($data->status == "OK") {
+        if ($data->status=="OK")
+        {
             $lat = $data->results[0]->geometry->location->lat;
             $lng = $data->results[0]->geometry->location->lng;
 
             if ($this->geocodeCaching) { // if we to need to cache this result
-                if ($address != "" && $lat != 0 && $lng != 0) {
+                if ($address != "" && $lat != 0 && $lng != 0)
+                {
                     $data = array(
-                        "address" => trim(strtolower($address)),
-                        "latitude" => $lat,
-                        "longitude" => $lng,
+                        "address"=>trim(strtolower($address)),
+                        "latitude"=>$lat,
+                        "longitude"=>$lng
                     );
                     $CI->db->insert("geocoding", $data);
                 }
             }
-        } else {
-            if ($data->status == "OVER_QUERY_LIMIT") {
+        }
+        else
+        {
+            if ($data->status == "OVER_QUERY_LIMIT")
+            {
                 $error = $data->status;
-                if ($attempts < 2) {
+                if ($attempts < 2)
+                {
                     sleep(1);
                     ++$attempts;
                     list($lat, $lng, $error) = $this->get_lat_long_from_address($address, $attempts);
@@ -2231,5 +2245,6 @@ class Phpgmaps
         }
 
         return array($lat, $lng, $error);
+
     }
-}
+} 

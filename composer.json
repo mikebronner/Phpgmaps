@@ -1,33 +1,20 @@
 {
-  "license": "MIT",
-  "name": "appitventures/phpgmaps",
-  "description": "A codeigniter library that has been modified a bit so that it's laravel friendly",
-  "keywords": [
-    "laravel",
-    "phpgmaps",
-    "googlemaps",
-    "biostall"
-  ],
-  "authors": [
-    {
-      "name": "Michael Hopkins",
-      "email": "michael@appitventures.com",
-      "role": "developer"
-    }
-  ],
-  "require": {
-    "php": ">=5.4.0",
-    "laravel/framework": "5.*"
-  },
-  "autoload": {
-    "psr-4": {
-      "Appitventures\\Phpgmaps\\": "src"
-    }
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0-dev"
-    }
-  },
-  "minimum-stability": "dev"
+    "name": "appitventures/phpgmaps",
+    "description": "",
+    "authors": [
+        {
+            "name": "Appit Ventures",
+            "email": "michael@appitventures.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Appitventures\\Phpgmaps\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
 }
