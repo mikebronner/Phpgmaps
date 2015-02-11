@@ -54,7 +54,7 @@ The following code will prompt the user for access to their geolocation and then
         Gmaps::add_marker($marker);
 
         $map = Gmaps::create_map();
-        echo "<html><head><script type="text/javascript">var centreGot = false;</script>".$map['js']."</head><body>".$map['html']."</body></html>";
+        echo "<html><head>".$map['js']."</head><body>".$map['html']."</body></html>";
     });
 
 ### More Examples
