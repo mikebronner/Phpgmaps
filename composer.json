@@ -1,20 +1,27 @@
 {
-    "name": "appitventures/phpgmaps",
-    "description": "",
-    "authors": [
-        {
-            "name": "Appit Ventures",
-            "email": "michael@appitventures.com"
-        }
-    ],
-    "require": {
-        "php": ">=5.4.0",
-        "illuminate/support": "4.2.*"
-    },
-    "autoload": {
-        "psr-0": {
-            "Appitventures\\Phpgmaps\\": "src/"
-        }
-    },
-    "minimum-stability": "stable"
+  "name": "appitventures/phpgmaps",
+  "description": "",
+  "authors": [
+    {
+      "name": "Appit Ventures",
+      "email": "michael@appitventures.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "illuminate/support": "4.2.*"
+  },
+  "autoload": {
+    "psr-0": {
+      "Appitventures\\Phpgmaps\\": "src/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-laravel4": "1.0-dev",
+      "dev-develop": "1.1-dev",
+      "dev-master": "1.0-dev"
+    }
+  },
+  "minimum-stability": "stable"
 }
