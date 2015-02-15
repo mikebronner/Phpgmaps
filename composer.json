@@ -20,7 +20,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Appitventures\\Phpgmaps\\": "src"
+      "Appitventures\\Phpgmaps\\": "src/Appitventures/Phpgmaps/"
     }
   },
   "extra": {
