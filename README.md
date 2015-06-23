@@ -1,3 +1,25 @@
+# PhpGmaps
+This repo aims to keep appitventures/phpgmaps alive, hopefully filling in temporarily until they make their repo
+available again, or else continuing its maintenance going forward and keeping it working with future versions of
+Laravel.
+
+## Installation Changes
+Add a repositories section to you composer.json, and change the version to `dev-master`, then follow the other
+instructions below in the original README section:
+
+```
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/genealabs/phpgmaps"
+    }
+  ],
+  "require": {
+      "appitventures/phpgmaps": "dev-master"
+  }
+```
+
+#Original README
 ## Phpgmaps
 A none CI implementation of BIOINSTALL's [CodeIgniter library](http://github.com/BIOSTALL/CodeIgniter-Google-Maps-V3-API-Library).
 
