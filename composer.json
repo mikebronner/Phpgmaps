@@ -24,7 +24,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Appitventures\\Phpgmaps\\": "src/Appitventures/Phpgmaps/"
+      "GeneaLabs\\Phpgmaps\\": "src/GeneaLabs/Phpgmaps/"
     }
   },
   "extra": {
