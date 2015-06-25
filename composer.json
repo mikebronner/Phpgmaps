@@ -1,5 +1,5 @@
 {
-  "name": "appitventures/phpgmaps",
+  "name": "genealabs/phpgmaps",
   "description": "A codeigniter library that has been modified a bit so that it's laravel friendly",
   "keywords": [
     "laravel",
@@ -9,8 +9,12 @@
   ],
   "authors": [
     {
+      "name": "Mike Bronner",
+      "email": "mike@genealabs.com",
+      "role": "maintainer"
+    },
+    {
       "name": "Michael Hopkins",
-      "email": "michael@appitventures.com",
       "role": "developer"
     }
   ],

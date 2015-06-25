@@ -1,4 +1,4 @@
-<?php namespace Appitventures\Phpgmaps\Facades;
+<?php namespace GeneaLabs\Phpgmaps\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

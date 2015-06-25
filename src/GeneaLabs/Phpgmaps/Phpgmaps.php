@@ -1,4 +1,4 @@
-<?php namespace Appitventures\Phpgmaps;
+<?php namespace GeneaLabs\Phpgmaps;
 
 class Phpgmaps
 {

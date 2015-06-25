@@ -8,14 +8,8 @@ Add a repositories section to you composer.json, and change the version to `dev-
 instructions below in the original README section:
 
 ```
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/genealabs/phpgmaps"
-    }
-  ],
   "require": {
-      "appitventures/phpgmaps": "dev-master"
+      "genealabs/phpgmaps": "~0.3.0"
   }
 ```
 

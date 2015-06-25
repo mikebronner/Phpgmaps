@@ -1,4 +1,4 @@
-<?php namespace Appitventures\Phpgmaps;
+<?php namespace GeneaLabs\Phpgmaps;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
