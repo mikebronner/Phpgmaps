@@ -1,6 +1,6 @@
 {
   "name": "genealabs/phpgmaps",
-  "description": "A codeigniter library that has been modified a bit so that it's laravel friendly",
+  "description": "Laravel implementation of BIOSTALL's CodeIgniter Google Maps API, originally by Michael Hopkins at Appitventures.",
   "license": "MIT",
   "keywords": [
     "laravel",
