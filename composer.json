@@ -1,6 +1,7 @@
 {
   "name": "genealabs/phpgmaps",
   "description": "A codeigniter library that has been modified a bit so that it's laravel friendly",
+  "license": "MIT",
   "keywords": [
     "laravel",
     "phpgmaps",
