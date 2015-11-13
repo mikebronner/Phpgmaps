@@ -1,6 +1,6 @@
 <?php namespace GeneaLabs\Phpgmaps;
 
-use GeneaLabs\Phpgmaps\Facades\Phpgmaps;
+use GeneaLabs\Phpgmaps\Facades\PhpgmapsFacade;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
@@ -32,7 +32,7 @@ class PhpgmapsServiceProvider extends ServiceProvider
     {
         $this->app->booting(function () {
             $loader = AliasLoader::getInstance();
-            $loader->alias('Gmaps', Phpgmaps::class);
+            $loader->alias('Gmaps', PhpgmapsFacade::class);
         });
         $this->app['phpgmaps'] = $this->app->share(function ($app) {
             return new Phpgmaps();
