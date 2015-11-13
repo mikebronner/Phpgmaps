@@ -30,10 +30,6 @@ class PhpgmapsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->booting(function () {
-            $loader = AliasLoader::getInstance();
-            $loader->alias('Gmaps', PhpgmapsFacade::class);
-        });
         $this->app['phpgmaps'] = $this->app->share(function ($app) {
             return new Phpgmaps();
         });

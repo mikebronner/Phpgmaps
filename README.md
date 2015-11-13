@@ -18,9 +18,9 @@ Then add the service provider entry to `config/app.php`:
         'GeneaLabs\Phpgmaps\PhpgmapsServiceProvider',
 ```
 
-And the Facade (further down in `config/app.php`):
+And the Facade in the alias section (further down in `config/app.php`):
 ```php
-        'Gmaps' => 'GeneaLabs\Phpgmaps\Facades\Phpgmaps',
+        'Gmaps' => 'GeneaLabs\Phpgmaps\Facades\PhpgmapsFacade',
 ```
 
 #Original README
@@ -31,7 +31,7 @@ A none CI implementation of BIOINSTALL's [CodeIgniter library](http://github.com
 I found this library to be incredibly useful when I was working in CodeIgniter. However a little bit of work needed to be done to use it in a Laravel project. I can't take any of the credit for the actual "heavy lifting" going on in the class.
 ---
 
-### Example 
+### Example
 The following code will prompt the user for access to their geolocation and then creates a map centered on their lat/lng
 
     Route::get('/', function(){
@@ -44,7 +44,7 @@ The following code will prompt the user for access to their geolocation and then
                 });
             }
             centreGot = true;';
-            
+
         Gmaps::initialize($config);
 
         // set up the marker ready for positioning
