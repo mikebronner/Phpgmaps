@@ -24,6 +24,7 @@ class Phpgmaps
     public $clusterZoomOnClick = true;                        // Whether the default behaviour of clicking on a cluster is to zoom into it
     public $clusterAverageCenter = false;                    // Whether the center of each cluster should be the average of all markers in the cluster
     public $clusterMinimumClusterSize = 2;                        // The minimum number of markers to be in a cluster before the markers are hidden and a count is shown
+    public $clusterStyles = []; 				// (object) An array that has style properties: *  'url': (string) The image url. *  'height': (number) The image height. *  'width': (number) The image width. *  'anchor': (Array) The anchor position of the label text. *  'textColor': (string) The text color. *  'textSize': (number) The text size. *  'backgroundPosition': (string) The position of the backgound x, y.
     public $disableDefaultUI = false;                    // If set to TRUE will hide the default controls (ie. zoom, scale etc)
     public $disableDoubleClickZoom = false;                    // If set to TRUE will disable zooming when a double click occurs
     public $disableMapTypeControl = false;                    // If set to TRUE will hide the MapType control (ie. Map, Satellite, Hybrid, Terrain)
@@ -144,6 +145,7 @@ class Phpgmaps
     public $placesAutocompleteBoundNE = '';                        // Both South-West (lat/long co-ordinate or address) and North-East (lat/long co-ordinate or address) values are required if wishing to set bounds
     public $placesAutocompleteBoundsMap = false;                    // An alternative to setting the SW and NE bounds is to use the bounds of the current viewport. If set to TRUE, the bounds will be set to the viewport of the visible map, even if dragged or zoomed
     public $placesAutocompleteOnChange = '';                        // The JavaScript action to perform when a place is selected
+    
 
     public function __construct($config = array())
     {
@@ -203,7 +205,8 @@ class Phpgmaps
         $marker['title'] = '';                                    // The tooltip text to show on hover
         $marker['visible'] = true;                                // Defines if the marker is visible by default
         $marker['zIndex'] = '';                                    // The zIndex of the marker. If two markers overlap, the marker with the higher zIndex will appear on top
-
+        $marker['label'] = '';                                    // The label of the marker. 
+        
         $marker_output = '';
 
         foreach ($params as $key => $value) {
@@ -310,6 +313,13 @@ class Phpgmaps
             $marker_output .= ',
 				animation:  google.maps.Animation.'.strtoupper($marker['animation']);
         }
+        if ($marker['label'] != "") {
+            $marker_output .= ',
+				label: "'.$marker['label'].'"';
+        }
+        
+        
+        
         $marker_output .= '
 			};
 			marker_'.$marker_id.' = createMarker_'.$this->map_name.'(markerOptions);
@@ -1112,8 +1122,9 @@ class Phpgmaps
 
             if ($this->cluster) {
                 $this->output_js .= '
-			<script type="text/javascript" src="'.(($this->https) ? 'https' : 'http').'://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js"></script>
-			';
+
+			<script type="text/javascript" src="'.(($this->https) ? 'https' : 'http').'://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js"></script >
+					';
             }
         }
         if ($this->jsfile == "") {
@@ -1348,10 +1359,12 @@ class Phpgmaps
             $this->output_js_contents .= ',
 					zoomControlOptions: {'.implode(",", $zoomControlOptions).'}';
         }
-        $this->output_js_contents .= '}
-				'.$this->map_name.' = new google.maps.Map(document.getElementById("'.$this->map_div_id.'"), myOptions);
-				';
-
+        
+        
+        $this->output_js_contents .= '};';
+        
+		$this->output_js_contents .=$this->map_name.' = new google.maps.Map(document.getElementById("'.$this->map_div_id.'"), myOptions);';
+		
         if ($styleOutput != "") {
             $this->output_js_contents .= $styleOutput.'
 				';
@@ -1839,6 +1852,22 @@ class Phpgmaps
                 $this->output_js_contents .= ',
 				averageCenter: true';
             }
+            if (count($this->clusterStyles) > 0) {
+            	
+                $this->output_js_contents .= ',
+				styles: [ ';
+               	$styleOutput = [];
+                foreach($this->clusterStyles as $clusterStyle){
+                	$attributes =[];
+	                foreach($clusterStyle as $key => $style){
+	                	$attributes[] = $key.':"'.$style.'"';
+	                }
+	                $styleOutput[] = '{'.implode(',',$attributes).'}';
+                }
+                $this->output_js_contents .= implode(',',$styleOutput);
+                $this->output_js_contents .= ']';
+            }
+            
             $this->output_js_contents .= ',
 				minimumClusterSize: '.$this->clusterMinimumClusterSize.'
 			};
