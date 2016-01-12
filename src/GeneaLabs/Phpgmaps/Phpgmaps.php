@@ -145,7 +145,7 @@ class Phpgmaps
     public $placesAutocompleteBoundNE = '';                        // Both South-West (lat/long co-ordinate or address) and North-East (lat/long co-ordinate or address) values are required if wishing to set bounds
     public $placesAutocompleteBoundsMap = false;                    // An alternative to setting the SW and NE bounds is to use the bounds of the current viewport. If set to TRUE, the bounds will be set to the viewport of the visible map, even if dragged or zoomed
     public $placesAutocompleteOnChange = '';                        // The JavaScript action to perform when a place is selected
-    
+
 
     public function __construct($config = array())
     {
@@ -205,8 +205,8 @@ class Phpgmaps
         $marker['title'] = '';                                    // The tooltip text to show on hover
         $marker['visible'] = true;                                // Defines if the marker is visible by default
         $marker['zIndex'] = '';                                    // The zIndex of the marker. If two markers overlap, the marker with the higher zIndex will appear on top
-        $marker['label'] = '';                                    // The label of the marker. 
-        
+        $marker['label'] = '';                                    // The label of the marker.
+
         $marker_output = '';
 
         foreach ($params as $key => $value) {
@@ -317,9 +317,9 @@ class Phpgmaps
             $marker_output .= ',
 				label: "'.$marker['label'].'"';
         }
-        
-        
-        
+
+
+
         $marker_output .= '
 			};
 			marker_'.$marker_id.' = createMarker_'.$this->map_name.'(markerOptions);
@@ -1077,9 +1077,19 @@ class Phpgmaps
 
         if ($this->maps_loaded == 0) {
             if ($this->apiKey != "") {
-                $apiLocation = '//maps.googleapis.com/maps/api/js?key='.$this->apiKey.'&';
+                if ($this->https) {
+                    $apiLocation = 'https';
+                } else {
+                    $apiLocation = 'http';
+                }
+                $apiLocation .= '://maps.googleapis.com/maps/api/js?key='.$this->apiKey.'&';
             } else {
-                $apiLocation = '//maps.google.com/maps/api/js?';
+                if ($this->https) {
+                    $apiLocation = 'https://maps-api-ssl';
+                } else {
+                    $apiLocation = 'http://maps';
+                }
+                $apiLocation .= '.google.com/maps/api/js?';
             }
             $apiLocation .= 'sensor='.$this->sensor;
             if ($this->region != "" && strlen($this->region) == 2) {
@@ -1113,7 +1123,7 @@ class Phpgmaps
             if ($this->cluster) {
                 $this->output_js .= '
 
-			<script type="text/javascript" src="//google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js"></script >
+			<script type="text/javascript" src="'.(($this->https) ? 'https' : 'http').'://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js"></script >
 					';
             }
         }
@@ -1349,12 +1359,12 @@ class Phpgmaps
             $this->output_js_contents .= ',
 					zoomControlOptions: {'.implode(",", $zoomControlOptions).'}';
         }
-        
-        
+
+
         $this->output_js_contents .= '};';
-        
-		$this->output_js_contents .=$this->map_name.' = new google.maps.Map(document.getElementById("'.$this->map_div_id.'"), myOptions);';
-		
+
+        $this->output_js_contents .=$this->map_name.' = new google.maps.Map(document.getElementById("'.$this->map_div_id.'"), myOptions);';
+
         if ($styleOutput != "") {
             $this->output_js_contents .= $styleOutput.'
 				';
@@ -1843,21 +1853,21 @@ class Phpgmaps
 				averageCenter: true';
             }
             if (count($this->clusterStyles) > 0) {
-            	
+
                 $this->output_js_contents .= ',
 				styles: [ ';
-               	$styleOutput = [];
+                $styleOutput = [];
                 foreach($this->clusterStyles as $clusterStyle){
-                	$attributes =[];
-	                foreach($clusterStyle as $key => $style){
-	                	$attributes[] = $key.':"'.$style.'"';
-	                }
-	                $styleOutput[] = '{'.implode(',',$attributes).'}';
+                    $attributes =[];
+                    foreach($clusterStyle as $key => $style){
+                        $attributes[] = $key.':"'.$style.'"';
+                    }
+                    $styleOutput[] = '{'.implode(',',$attributes).'}';
                 }
                 $this->output_js_contents .= implode(',',$styleOutput);
                 $this->output_js_contents .= ']';
             }
-            
+
             $this->output_js_contents .= ',
 				minimumClusterSize: '.$this->clusterMinimumClusterSize.'
 			};
@@ -2211,7 +2221,12 @@ class Phpgmaps
             }
         }
 
-        $data_location = "//maps.google.com/maps/api/geocode/json?address=".urlencode(utf8_encode($address))."&sensor=".$this->sensor;
+        if ($this->https) {
+            $data_location = 'https://';
+        } else {
+            $data_location = 'http://';
+        }
+        $data_location .= "maps.google.com/maps/api/geocode/json?address=".urlencode(utf8_encode($address))."&sensor=".$this->sensor;
         if ($this->region != "" && strlen($this->region) == 2) {
             $data_location .= "&region=".$this->region;
         }
