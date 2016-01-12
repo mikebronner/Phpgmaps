@@ -1077,19 +1077,9 @@ class Phpgmaps
 
         if ($this->maps_loaded == 0) {
             if ($this->apiKey != "") {
-                if ($this->https) {
-                    $apiLocation = 'https';
-                } else {
-                    $apiLocation = 'http';
-                }
-                $apiLocation .= '://maps.googleapis.com/maps/api/js?key='.$this->apiKey.'&';
+                $apiLocation = 'https://maps.googleapis.com/maps/api/js?key='.$this->apiKey.'&';
             } else {
-                if ($this->https) {
-                    $apiLocation = 'https://maps-api-ssl';
-                } else {
-                    $apiLocation = 'http://maps';
-                }
-                $apiLocation .= '.google.com/maps/api/js?';
+                $apiLocation = 'https://maps.google.com/maps/api/js?';
             }
             $apiLocation .= 'sensor='.$this->sensor;
             if ($this->region != "" && strlen($this->region) == 2) {
@@ -1123,7 +1113,7 @@ class Phpgmaps
             if ($this->cluster) {
                 $this->output_js .= '
 
-			<script type="text/javascript" src="'.(($this->https) ? 'https' : 'http').'://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js"></script >
+			<script type="text/javascript" src="https://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js"></script >
 					';
             }
         }
@@ -2221,12 +2211,7 @@ class Phpgmaps
             }
         }
 
-        if ($this->https) {
-            $data_location = 'https://';
-        } else {
-            $data_location = 'http://';
-        }
-        $data_location .= "maps.google.com/maps/api/geocode/json?address=".urlencode(utf8_encode($address))."&sensor=".$this->sensor;
+        $data_location = "https://maps.google.com/maps/api/geocode/json?address=".urlencode(utf8_encode($address))."&sensor=".$this->sensor;
         if ($this->region != "" && strlen($this->region) == 2) {
             $data_location .= "&region=".$this->region;
         }
