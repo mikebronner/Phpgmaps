@@ -31,7 +31,7 @@ class PhpgmapsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app['phpgmaps'] = $this->app->share(function ($app) {
-            return new Phpgmaps();
+            return new Phpgmaps(['http' => $app->make('request')->secure()]);
         });
     }
 
