@@ -1,5 +1,8 @@
 # Change Log
-## [0.3.8] - 2016-08-07
+## [0.3.8 - 0.3.9] - 2016-08-07
+### Added
+- automatic setting of apiKey from `config('services.google.maps.api-key')`.
+
 ### Removed
 - deprectated 'sensor' querystring parameter, which would trigger a "SensorNotRequired" warning.
 
