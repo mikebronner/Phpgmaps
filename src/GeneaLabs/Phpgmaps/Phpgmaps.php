@@ -79,7 +79,6 @@ class Phpgmaps
     public $region = '';                        // Country code top-level domain (eg "uk") within which to search. Useful if supplying addresses rather than lat/longs
     public $scaleControlPosition = '';                        // The position of the Scale control, eg. 'BOTTOM_RIGHT'
     public $scrollwheel = true;                        // If set to FALSE will disable zooming by scrolling of the mouse wheel
-    public $sensor = false;                    // Set to TRUE if being used on a device that can detect a users location
     public $streetViewAddressControl = true;                        // If set to FALSE will hide the Address control
     public $streetViewAddressPosition = '';                        // The position of the Address control, eg. 'BOTTOM'
     public $streetViewControlPosition = '';                        // The position of the Street View control when viewing normal aerial map, eg. 'BOTTOM_RIGHT'
@@ -162,12 +161,6 @@ class Phpgmaps
             if (isset($this->$key)) {
                 $this->$key = $val;
             }
-        }
-
-        if ($this->sensor) {
-            $this->sensor = "true";
-        } else {
-            $this->sensor = "false";
         }
     }
 
@@ -1081,7 +1074,6 @@ class Phpgmaps
             } else {
                 $apiLocation = 'https://maps.google.com/maps/api/js?';
             }
-            $apiLocation .= 'sensor='.$this->sensor;
             if ($this->region != "" && strlen($this->region) == 2) {
                 $apiLocation .= '&region='.strtoupper($this->region);
             }
@@ -2211,7 +2203,7 @@ class Phpgmaps
             }
         }
 
-        $data_location = "https://maps.google.com/maps/api/geocode/json?address=".urlencode(utf8_encode($address))."&sensor=".$this->sensor;
+        $data_location = "https://maps.google.com/maps/api/geocode/json?address=".urlencode(utf8_encode($address));
         if ($this->region != "" && strlen($this->region) == 2) {
             $data_location .= "&region=".$this->region;
         }
