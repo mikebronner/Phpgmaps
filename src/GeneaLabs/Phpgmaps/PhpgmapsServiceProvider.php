@@ -30,7 +30,7 @@ class PhpgmapsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app['phpgmaps'] = $this->app->share(function () {
+        $this->app['phpgmaps'] = $this->app->singleton(function () {
             $phpgmaps = new Phpgmaps();
             $phpgmaps->apiKey = config('services.google.maps.api-key');
 
