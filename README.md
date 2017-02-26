@@ -18,11 +18,6 @@ Then add the service provider entry to `config/app.php`:
         'GeneaLabs\Phpgmaps\PhpgmapsServiceProvider',
 ```
 
-And the Facade in the alias section (further down in `config/app.php`):
-```php
-        'Gmaps' => 'GeneaLabs\Phpgmaps\Facades\PhpgmapsFacade',
-```
-
 #Original README
 ## Phpgmaps
 A none CI implementation of BIOINSTALL's [CodeIgniter library](http://github.com/BIOSTALL/CodeIgniter-Google-Maps-V3-API-Library).
