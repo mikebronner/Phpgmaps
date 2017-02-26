@@ -38,7 +38,7 @@ class PhpgmapsServiceProvider extends ServiceProvider
         });
         
         
-        AliasLoader::getInstance()->alias('Phpgmaps', PhpgmapsFacade::class);
+        AliasLoader::getInstance()->alias('Gmaps', PhpgmapsFacade::class);
     }
 
     /**
