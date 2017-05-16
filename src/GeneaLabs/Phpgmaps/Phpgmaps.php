@@ -144,6 +144,7 @@ class Phpgmaps
     public $placesAutocompleteBoundNE = '';                        // Both South-West (lat/long co-ordinate or address) and North-East (lat/long co-ordinate or address) values are required if wishing to set bounds
     public $placesAutocompleteBoundsMap = false;                    // An alternative to setting the SW and NE bounds is to use the bounds of the current viewport. If set to TRUE, the bounds will be set to the viewport of the visible map, even if dragged or zoomed
     public $placesAutocompleteOnChange = '';                        // The JavaScript action to perform when a place is selected
+    public $gestureHandling = 'auto';                                // Controls the panning and scrolling behavior of a map when viewed on a mobile device. greedy(allways moves on touch), cooperative(1 finger scroll 2 finger move), none(not pannable or pinchable), auto
 
 
     public function __construct($config = array())
@@ -1210,6 +1211,10 @@ class Phpgmaps
         if ($this->center != "auto") {
             $this->output_js_contents .= '
 					center: myLatlng,';
+        }
+        if($this->gestureHandling != 'auto'){
+            $this->output_js_contents .= '
+                    gestureHandling: \''.$this->gestureHandling .'\',';
         }
         if (strtolower($this->map_type) == "street") {
             $map_type = "ROADMAP";
