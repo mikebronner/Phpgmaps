@@ -7,10 +7,8 @@ Currently only Laravel 5.* is supported.
 
 ## Installation Changes
 Add the repo to composer.json under this new namespace:
-```
-  "require": {
-      "genealabs/phpgmaps": "~0.3.0"
-  }
+```sh
+composer require genealabs/phpgmaps
 ```
 
 Then add the service provider entry to `config/app.php`:
