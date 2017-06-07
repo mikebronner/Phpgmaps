@@ -5,7 +5,7 @@ Laravel.
 
 Currently only Laravel 5.* is supported.
 
-## Installation Changes
+## Installation
 Add the repo to composer.json under this new namespace:
 ```sh
 composer require genealabs/phpgmaps
@@ -16,7 +16,21 @@ Then add the service provider entry to `config/app.php`:
         'GeneaLabs\Phpgmaps\PhpgmapsServiceProvider',
 ```
 
-#Original README
+Add an environment variable with your Google Maps API Key in your `.env` file:
+```
+GOOGLE_MAPS_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+Lastly, add the following entry to your `\config\services.php` config file:
+```php
+    'google' => [
+        'maps' => [
+            'api-key' => env('GOOGLE_MAPS_API_KEY'),
+        ],
+    ],
+```
+
+# Original README
 ## Phpgmaps
 A none CI implementation of BIOINSTALL's [CodeIgniter library](http://github.com/BIOSTALL/CodeIgniter-Google-Maps-V3-API-Library).
 
