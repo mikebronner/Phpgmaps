@@ -2194,17 +2194,11 @@ class Phpgmaps
 
         if ($this->geocodeCaching) { // if caching of geocode requests is activated
 
-            $CI = & get_instance();
-            $CI->load->database();
-            $CI->db->select("latitude,longitude");
-            $CI->db->from("geocoding");
-            $CI->db->where("address", trim(strtolower($address)));
-            $query = $CI->db->get();
+            $record = \DB::table("geocoding")
+                        ->where("address", trim(strtolower($address)));
 
-            if ($query->num_rows() > 0) {
-                $row = $query->row();
-
-                return array($row->latitude, $row->longitude);
+            if ($record->count()) {
+                return array($record->first()->latitude, $record->first()->longitude);
             }
         }
 
@@ -2222,12 +2216,13 @@ class Phpgmaps
 
             if ($this->geocodeCaching) { // if we to need to cache this result
                 if ($address != "" && $lat != 0 && $lng != 0) {
-                    $data = array(
-                        "address" => trim(strtolower($address)),
-                        "latitude" => $lat,
-                        "longitude" => $lng,
+                    \DB::table("geocoding")->insert(
+                        array(
+                            "address" => trim(strtolower($address)),
+                            "latitude" => $lat,
+                            "longitude" => $lng,
+                        )
                     );
-                    $CI->db->insert("geocoding", $data);
                 }
             }
         } else {
