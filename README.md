@@ -5,12 +5,10 @@ Laravel.
 
 Currently only Laravel 5.* is supported.
 
-## Installation Changes
+## Installation
 Add the repo to composer.json under this new namespace:
-```
-  "require": {
-      "genealabs/phpgmaps": "~0.3.0"
-  }
+```sh
+composer require genealabs/phpgmaps
 ```
 
 Then add the service provider entry to `config/app.php`:
@@ -18,12 +16,21 @@ Then add the service provider entry to `config/app.php`:
         'GeneaLabs\Phpgmaps\PhpgmapsServiceProvider',
 ```
 
-And the Facade (further down in `config/app.php`):
-```php
-        'Gmaps' => 'GeneaLabs\Phpgmaps\Facades\Phpgmaps',
+Add an environment variable with your Google Maps API Key in your `.env` file:
+```
+GOOGLE_MAPS_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
-#Original README
+Lastly, add the following entry to your `\config\services.php` config file:
+```php
+    'google' => [
+        'maps' => [
+            'api-key' => env('GOOGLE_MAPS_API_KEY'),
+        ],
+    ],
+```
+
+# Original README
 ## Phpgmaps
 A none CI implementation of BIOINSTALL's [CodeIgniter library](http://github.com/BIOSTALL/CodeIgniter-Google-Maps-V3-API-Library).
 
@@ -31,7 +38,7 @@ A none CI implementation of BIOINSTALL's [CodeIgniter library](http://github.com
 I found this library to be incredibly useful when I was working in CodeIgniter. However a little bit of work needed to be done to use it in a Laravel project. I can't take any of the credit for the actual "heavy lifting" going on in the class.
 ---
 
-### Example 
+### Example
 The following code will prompt the user for access to their geolocation and then creates a map centered on their lat/lng
 
     Route::get('/', function(){
@@ -44,7 +51,7 @@ The following code will prompt the user for access to their geolocation and then
                 });
             }
             centreGot = true;';
-            
+
         Gmaps::initialize($config);
 
         // set up the marker ready for positioning

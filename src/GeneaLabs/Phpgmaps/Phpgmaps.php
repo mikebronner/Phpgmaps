@@ -79,7 +79,6 @@ class Phpgmaps
     public $region = '';                        // Country code top-level domain (eg "uk") within which to search. Useful if supplying addresses rather than lat/longs
     public $scaleControlPosition = '';                        // The position of the Scale control, eg. 'BOTTOM_RIGHT'
     public $scrollwheel = true;                        // If set to FALSE will disable zooming by scrolling of the mouse wheel
-    public $sensor = false;                    // Set to TRUE if being used on a device that can detect a users location
     public $streetViewAddressControl = true;                        // If set to FALSE will hide the Address control
     public $streetViewAddressPosition = '';                        // The position of the Address control, eg. 'BOTTOM'
     public $streetViewControlPosition = '';                        // The position of the Street View control when viewing normal aerial map, eg. 'BOTTOM_RIGHT'
@@ -145,7 +144,8 @@ class Phpgmaps
     public $placesAutocompleteBoundNE = '';                        // Both South-West (lat/long co-ordinate or address) and North-East (lat/long co-ordinate or address) values are required if wishing to set bounds
     public $placesAutocompleteBoundsMap = false;                    // An alternative to setting the SW and NE bounds is to use the bounds of the current viewport. If set to TRUE, the bounds will be set to the viewport of the visible map, even if dragged or zoomed
     public $placesAutocompleteOnChange = '';                        // The JavaScript action to perform when a place is selected
-    
+    public $gestureHandling = 'auto';                                // Controls the panning and scrolling behavior of a map when viewed on a mobile device. greedy(allways moves on touch), cooperative(1 finger scroll 2 finger move), none(not pannable or pinchable), auto
+
 
     public function __construct($config = array())
     {
@@ -162,12 +162,6 @@ class Phpgmaps
             if (isset($this->$key)) {
                 $this->$key = $val;
             }
-        }
-
-        if ($this->sensor) {
-            $this->sensor = "true";
-        } else {
-            $this->sensor = "false";
         }
     }
 
@@ -205,8 +199,8 @@ class Phpgmaps
         $marker['title'] = '';                                    // The tooltip text to show on hover
         $marker['visible'] = true;                                // Defines if the marker is visible by default
         $marker['zIndex'] = '';                                    // The zIndex of the marker. If two markers overlap, the marker with the higher zIndex will appear on top
-        $marker['label'] = '';                                    // The label of the marker. 
-        
+        $marker['label'] = '';                                    // The label of the marker.
+
         $marker_output = '';
 
         foreach ($params as $key => $value) {
@@ -317,9 +311,9 @@ class Phpgmaps
             $marker_output .= ',
 				label: "'.$marker['label'].'"';
         }
-        
-        
-        
+
+
+
         $marker_output .= '
 			};
 			marker_'.$marker_id.' = createMarker_'.$this->map_name.'(markerOptions);
@@ -1077,21 +1071,10 @@ class Phpgmaps
 
         if ($this->maps_loaded == 0) {
             if ($this->apiKey != "") {
-                if ($this->https) {
-                    $apiLocation = 'https';
-                } else {
-                    $apiLocation = 'http';
-                }
-                $apiLocation .= '://maps.googleapis.com/maps/api/js?key='.$this->apiKey.'&';
+                $apiLocation = 'https://maps.googleapis.com/maps/api/js?key='.$this->apiKey.'&';
             } else {
-                if ($this->https) {
-                    $apiLocation = 'https://maps-api-ssl';
-                } else {
-                    $apiLocation = 'http://maps';
-                }
-                $apiLocation .= '.google.com/maps/api/js?';
+                $apiLocation = 'https://maps.google.com/maps/api/js?';
             }
-            $apiLocation .= 'sensor='.$this->sensor;
             if ($this->region != "" && strlen($this->region) == 2) {
                 $apiLocation .= '&region='.strtoupper($this->region);
             }
@@ -1123,7 +1106,7 @@ class Phpgmaps
             if ($this->cluster) {
                 $this->output_js .= '
 
-			<script type="text/javascript" src="'.(($this->https) ? 'https' : 'http').'://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js"></script >
+			<script type="text/javascript" src="https://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js"></script >
 					';
             }
         }
@@ -1228,6 +1211,10 @@ class Phpgmaps
         if ($this->center != "auto") {
             $this->output_js_contents .= '
 					center: myLatlng,';
+        }
+        if($this->gestureHandling != 'auto'){
+            $this->output_js_contents .= '
+                    gestureHandling: \''.$this->gestureHandling .'\',';
         }
         if (strtolower($this->map_type) == "street") {
             $map_type = "ROADMAP";
@@ -1359,12 +1346,12 @@ class Phpgmaps
             $this->output_js_contents .= ',
 					zoomControlOptions: {'.implode(",", $zoomControlOptions).'}';
         }
-        
-        
+
+
         $this->output_js_contents .= '};';
-        
-		$this->output_js_contents .=$this->map_name.' = new google.maps.Map(document.getElementById("'.$this->map_div_id.'"), myOptions);';
-		
+
+        $this->output_js_contents .=$this->map_name.' = new google.maps.Map(document.getElementById("'.$this->map_div_id.'"), myOptions);';
+
         if ($styleOutput != "") {
             $this->output_js_contents .= $styleOutput.'
 				';
@@ -1853,21 +1840,21 @@ class Phpgmaps
 				averageCenter: true';
             }
             if (count($this->clusterStyles) > 0) {
-            	
+
                 $this->output_js_contents .= ',
 				styles: [ ';
-               	$styleOutput = [];
+                $styleOutput = [];
                 foreach($this->clusterStyles as $clusterStyle){
-                	$attributes =[];
-	                foreach($clusterStyle as $key => $style){
-	                	$attributes[] = $key.':"'.$style.'"';
-	                }
-	                $styleOutput[] = '{'.implode(',',$attributes).'}';
+                    $attributes =[];
+                    foreach($clusterStyle as $key => $style){
+                        $attributes[] = $key.':"'.$style.'"';
+                    }
+                    $styleOutput[] = '{'.implode(',',$attributes).'}';
                 }
                 $this->output_js_contents .= implode(',',$styleOutput);
                 $this->output_js_contents .= ']';
             }
-            
+
             $this->output_js_contents .= ',
 				minimumClusterSize: '.$this->clusterMinimumClusterSize.'
 			};
@@ -2221,12 +2208,7 @@ class Phpgmaps
             }
         }
 
-        if ($this->https) {
-            $data_location = 'https://';
-        } else {
-            $data_location = 'http://';
-        }
-        $data_location .= "maps.google.com/maps/api/geocode/json?address=".urlencode(utf8_encode($address))."&sensor=".$this->sensor;
+        $data_location = "https://maps.google.com/maps/api/geocode/json?address=".urlencode(utf8_encode($address));
         if ($this->region != "" && strlen($this->region) == 2) {
             $data_location .= "&region=".$this->region;
         }

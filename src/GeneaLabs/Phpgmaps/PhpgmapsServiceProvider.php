@@ -1,6 +1,6 @@
 <?php namespace GeneaLabs\Phpgmaps;
 
-use GeneaLabs\Phpgmaps\Facades\Phpgmaps;
+use GeneaLabs\Phpgmaps\Facades\PhpgmapsFacade;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 
@@ -30,13 +30,15 @@ class PhpgmapsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->booting(function () {
-            $loader = AliasLoader::getInstance();
-            $loader->alias('Gmaps', Phpgmaps::class);
+        $this->app->singleton('phpgmaps', function () {
+            $phpgmaps = new Phpgmaps();
+            $phpgmaps->apiKey = config('services.google.maps.api-key');
+
+            return $phpgmaps;
         });
-        $this->app['phpgmaps'] = $this->app->share(function ($app) {
-            return new Phpgmaps();
-        });
+        
+        
+        AliasLoader::getInstance()->alias('Gmaps', PhpgmapsFacade::class);
     }
 
     /**

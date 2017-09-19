@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Facade;
 
-class Phpgmaps extends Facade
+class PhpgmapsFacade extends Facade
 {
 
     /**
