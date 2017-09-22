@@ -1,5 +1,5 @@
 {
-  "name": "genealabs/phpgmaps",
+  "name": "michaelgolinski/phpgmaps",
   "description": "Laravel implementation of BIOSTALL's CodeIgniter Google Maps API, originally by Michael Hopkins at Appitventures.",
   "license": "MIT",
   "keywords": [
