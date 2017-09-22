@@ -44,6 +44,7 @@ class Phpgmaps
     public $kmlLayerPreserveViewport = false;                    // Specifies whether the map should be adjusted to the bounds of the KmlLayer's contents. By default the map is zoomed and positioned to show the entirety of the layer's contents
     public $language = '';                        // The map will by default load in the language of the browser. This can be overriden however here. For a full list of codes see https://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1
     public $loadAsynchronously = false;                    // Load the map and API asynchronously once the page has loaded
+    public $denieOnload = false;                       // if true, do not initialize on window.onload
     public $map_div_id = "map_canvas";                // The ID of the <div></div> that is output which contains the map
     public $map_height = "450px";                    // The height of the map container. Any units (ie 'px') can be used. If no units are provided 'px' will be presumed
     public $map_name = "map";                    // The JS reference to the map. Currently not used but to be used in the future when multiple maps are supported
@@ -2111,7 +2112,7 @@ class Phpgmaps
 			';
         }
 
-        if ($this->loadAsynchronously) {
+            if ($this->loadAsynchronously) {
             $this->output_js_contents .= '
 			function loadScript_'.$this->map_name.'() {
 				var script = document.createElement("script");
@@ -2121,7 +2122,12 @@ class Phpgmaps
 			}
 			window.onload = loadScript_'.$this->map_name.';
 			';
-        } else {
+        } else if($this->denieOnload) {
+            // do nothing
+            $this->output_js_contents .= '
+                ';
+
+        }else{
             $this->output_js_contents .= '
 			google.maps.event.addDomListener(window, "load", initialize_'.$this->map_name.');
 			';
