@@ -1106,7 +1106,7 @@ class Phpgmaps
             if ($this->cluster) {
                 $this->output_js .= '
 
-			<script type="text/javascript" src="https://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js"></script >
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-marker-clusterer/1.0.0/markerclusterer_compiled.js"></script >
 					';
             }
         }
