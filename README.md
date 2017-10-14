@@ -1,4 +1,4 @@
-** Notice: I have moved development of this package to https://github.com/GeneaLabs/laravel-maps. Please use that package instead. **
+**Notice: I have moved development of this package to https://github.com/GeneaLabs/laravel-maps. Please use that package instead.**
 
 # PhpGmaps
 This repo aims to keep appitventures/phpgmaps alive, hopefully filling in temporarily until they make their repo
