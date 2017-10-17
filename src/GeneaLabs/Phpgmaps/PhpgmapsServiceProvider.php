@@ -21,6 +21,11 @@ class PhpgmapsServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Publish the migration
+        $timestamp = date('Y_m_d_His', time());
+        $this->publishes([
+            __DIR__.'/Migrations/create_geocoding_table.php.stub' => database_path('migrations') . '/' . $timestamp . '_create_geocoding_table.php',
+        ], 'migrations');
     }
 
     /**
@@ -36,8 +41,8 @@ class PhpgmapsServiceProvider extends ServiceProvider
 
             return $phpgmaps;
         });
-        
-        
+
+
         AliasLoader::getInstance()->alias('Gmaps', PhpgmapsFacade::class);
     }
 

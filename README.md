@@ -67,3 +67,10 @@ The following code will prompt the user for access to their geolocation and then
 
 ### More Examples
 BIOINSTALL has a great website showing how to do all the things with the class. No reason to reinvent the wheel, so [here](http://biostall.com/demos/google-maps-v3-api-codeigniter-library/) it is. The only thing to note is that `$this->googlemaps` is now `Gmaps::`.
+
+### Caching Geocoding Requests
+The original package had an option to cache geocode requests. This would increase performance and also minimize API calls to google. A database table is required. If you plan to use caching (you should), follow these steps:
+
+1. Set the config option to do so: `$config['geocodeCaching'] = true;`
+2. Copy the migration file to your project: `php artisan vendor:publish --provider="GeneaLabs\Phpgmaps\PhpgmapsServiceProvider"`
+3. Run your migrations: `php artisan migrate`
