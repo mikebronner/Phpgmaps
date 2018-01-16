@@ -1156,8 +1156,11 @@ class Phpgmaps
             $this->output_js_contents .= 'var drawingManager;
 			';
         }
+        $this->output_js_contents .= 'function initialize_'.$this->map_name.'() {
 
-        $this->output_js_contents .= '
+				';
+        
+	$this->output_js_contents .= '
 			iw_'.$this->map_name.' = new google.maps.InfoWindow(';
         if ($this->infowindowMaxWidth != 0) {
             $this->output_js_contents .= '{
@@ -1167,11 +1170,6 @@ class Phpgmaps
         $this->output_js_contents .= ');
 
 				 ';
-
-        $this->output_js_contents .= 'function initialize_'.$this->map_name.'() {
-
-				';
-
         $styleOutput = '';
         if (count($this->styles)) {
             $styles = 0;
